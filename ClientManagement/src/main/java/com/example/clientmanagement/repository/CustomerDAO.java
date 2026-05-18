@@ -39,11 +39,14 @@ public class CustomerDAO {
     }
 
     public Customer create(Customer customer) {
-        String query = "INSERT INTO users (name, email) VALUES (?, ?)";
+        String query = "INSERT INTO customer (id, nick, platform, name, email) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, customer.getName());
-            preparedStatement.setString(2, customer.getEmail());
+            preparedStatement.setLong(1, customer.getId());
+            preparedStatement.setString(2, customer.getNick());
+            preparedStatement.setString(3, customer.getPlatform());
+            preparedStatement.setString(4, customer.getName());
+            preparedStatement.setString(5, customer.getEmail());
             int updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got " + updated);
@@ -58,4 +61,9 @@ public class CustomerDAO {
             throw new RuntimeException("Error creating customer", e);
         }
     }
+
+//    public Customer findCustomer(Long id){
+//        String query = "SELECT id, nick, platform, name, email FROM customer WHERE id = ?";
+//
+//    }
 }
