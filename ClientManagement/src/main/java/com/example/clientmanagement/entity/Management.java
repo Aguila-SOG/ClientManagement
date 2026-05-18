@@ -22,6 +22,18 @@ public class Management {
     @Column(nullable = false, length = 50)
     private double performance;
 
+    public Management(Long id, int fac_year, int quarterly, double tax_payment, double performance) {
+        this.id = id;
+        this.fac_year = fac_year;
+        this.quarterly = quarterly;
+        this.tax_payment = tax_payment;
+        this.performance = performance;
+    }
+
+    public Management() {
+        
+    }
+
     public Long getId() {
         return id;
     }
