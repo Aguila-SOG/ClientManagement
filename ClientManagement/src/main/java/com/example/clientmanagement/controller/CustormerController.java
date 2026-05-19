@@ -25,8 +25,6 @@ public class CustormerController {
 
     @PostMapping("/create")
     public ResponseEntity<Customer> create(@RequestBody Customer customer) {
-        System.out.println("Controller -> create");
-
         if (customer == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Body is required");
         }
@@ -42,5 +40,38 @@ public class CustormerController {
 
         Customer created = customerService.create(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @GetMapping("/{id}")
+    public Customer findCustomer(@PathVariable Long id){
+        try {
+            return customerService.findCustomer(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<Customer> editCustomer(@PathVariable Long id,@PathVariable String nick,@PathVariable String platform,@PathVariable String name,@PathVariable String email) {
+        if (nick == null || nick.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nick is required");
+        }
+        if (platform == null || platform.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "platform is required");
+        }
+        if (email == null || email.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email is required");
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.editCustomer(id, nick, platform, name, email));
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteCustomer(@PathVariable Long id){
+        try {
+            customerService.deleteCustomer(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
