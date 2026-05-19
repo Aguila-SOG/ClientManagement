@@ -22,6 +22,14 @@ public class Customer {
     @Column(nullable = false, length = 50)
     private String email;
 
+    public Customer(Long id, String nick, String platform, String name, String email) {
+        this.id = id;
+        this.nick = nick;
+        this.platform = platform;
+        this.name = name;
+        this.email = email;
+    }
+
     public String getNick() {
         return nick;
     }
