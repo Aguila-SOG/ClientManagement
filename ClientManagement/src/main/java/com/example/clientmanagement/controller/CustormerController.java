@@ -52,22 +52,22 @@ public class CustormerController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Customer> editCustomer(@PathVariable Long id,@PathVariable String nick,@PathVariable String platform,@PathVariable String name,@PathVariable String email) {
-        if (nick == null || nick.isBlank()) {
+    public ResponseEntity<Customer> editCustomer(@RequestBody Customer customer) {
+        if (customer.getNick() == null || customer.getNick().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nick is required");
         }
-        if (platform == null || platform.isBlank()) {
+        if (customer.getPlatform() == null || customer.getPlatform().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "platform is required");
         }
-        if (email == null || email.isBlank()) {
+        if (customer.getEmail() == null || customer.getEmail().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email is required");
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.editCustomer(id, nick, platform, name, email));
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.editCustomer(customer));
     }
 
     @DeleteMapping("/delete")
-    public void deleteCustomer(@PathVariable Long id){
+    public void deleteCustomer(@RequestParam Long id){
         try {
             customerService.deleteCustomer(id);
         } catch (Exception e) {

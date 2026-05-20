@@ -84,24 +84,18 @@ public class CustomerDAO {
         return customers;
     }
 
-    public Customer editCustomer(Long id, String nick, String platform, String name, String email){
-        Customer customer = null;
+    public Customer editCustomer(Customer customer){
         String query = "UPDATE customer SET nick = ?, platform = ?, name = ?, email = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, nick);
-            preparedStatement.setString(2, platform);
-            preparedStatement.setString(3, name);
-            preparedStatement.setString(4, email);
-            preparedStatement.setLong(5, id);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, customer.getNick());
+            preparedStatement.setString(2, customer.getPlatform());
+            preparedStatement.setString(3, customer.getName());
+            preparedStatement.setString(4, customer.getEmail());
+            preparedStatement.setLong(5, customer.getId());
             int updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got " + updated);
-            }
-            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    customer.setId(resultSet.getLong(1));
-                }
             }
             return customer;
         } catch (SQLException e) {
