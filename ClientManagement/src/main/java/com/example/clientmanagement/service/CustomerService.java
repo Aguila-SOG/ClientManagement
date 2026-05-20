@@ -22,8 +22,8 @@ public class CustomerService {
         return customerDAO.create(customer);
     }
 
-    public Customer findCustomer(Long id){
-        return customerDAO.findCustomer(id);
+    public List<Customer> findCustomer(String nick){
+        return customerDAO.findCustomer(nick);
     }
 
     public Customer editCustomer(Long id, String nick, String platform, String name, String email){

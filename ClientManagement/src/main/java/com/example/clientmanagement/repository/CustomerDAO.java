@@ -61,26 +61,27 @@ public class CustomerDAO {
         }
     }
 
-    public Customer findCustomer(Long id){
-        Customer customer = null;
-        String query = "SELECT id, nick, platform, name, email FROM customer WHERE id = ?";
+    public List<Customer> findCustomer(String nick){
+        List<Customer> customers = new ArrayList<>();
+        String query = "SELECT id, nick, platform, name, email FROM customer WHERE nick like ?";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery(query);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, "%"+nick+"%");
+            ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                 customer = new Customer(
+                 Customer customer = new Customer(
                         resultSet.getLong("id"),
                         resultSet.getString("nick"),
                         resultSet.getString("platform"),
                         resultSet.getString("name"),
                         resultSet.getString("email")
-                );
+                 );
+                 customers.add(customer);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return customer;
+        return customers;
     }
 
     public Customer editCustomer(Long id, String nick, String platform, String name, String email){

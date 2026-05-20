@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/customers")
 public class CustormerController {
@@ -42,10 +42,10 @@ public class CustormerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping("/{id}")
-    public Customer findCustomer(@PathVariable Long id){
+    @GetMapping("/search/{nick}")
+    public List<Customer> findCustomer(@PathVariable String nick){
         try {
-            return customerService.findCustomer(id);
+            return customerService.findCustomer(nick);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
