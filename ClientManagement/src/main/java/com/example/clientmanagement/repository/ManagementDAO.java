@@ -38,7 +38,7 @@ public class ManagementDAO {
         return managements;
     }
 
-    public Management create(Management management) {
+    public Management createManagement(Management management) {
         String query = "INSERT INTO management (id, fac_year, quarterly, tax_payment, performance) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -47,7 +47,7 @@ public class ManagementDAO {
             preparedStatement.setInt(3, management.getQuarterly());
             preparedStatement.setDouble(4, management.getTax_payment());
             preparedStatement.setDouble(5, management.getPerformance());
-            int updated = preparedStatement.executeUpdate();
+            Integer updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got " + updated);
             }
@@ -84,7 +84,7 @@ public class ManagementDAO {
         return management;
     }
 
-    public Management editManagement(Long id, int fac_year, int quarterly, double tax_payment, double performance){
+    public Management editManagement(Long id, Integer fac_year, Integer quarterly, double tax_payment, double performance){
         Management management = null;
         String query = "UPDATE management SET fac_year = ?, quarterly = ?, tax_payment = ?, performance = ? WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
@@ -94,7 +94,7 @@ public class ManagementDAO {
             preparedStatement.setDouble(3, tax_payment);
             preparedStatement.setDouble(4, performance);
             preparedStatement.setLong(5, id);
-            int updated = preparedStatement.executeUpdate();
+            Integer updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row updated, got " + updated);
             }
@@ -114,7 +114,7 @@ public class ManagementDAO {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setLong(1, id);
-            int updated = preparedStatement.executeUpdate();
+            Integer updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row deleted, got " + updated);
             }

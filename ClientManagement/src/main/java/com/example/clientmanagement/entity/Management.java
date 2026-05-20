@@ -11,18 +11,18 @@ public class Management {
     private Long id;
 
     @Column(nullable = false, length = 4)
-    private int fac_year;
+    private Integer fac_year;
 
     @Column(nullable = false, length = 1)
-    private int quarterly;
+    private Integer quarterly;
 
     @Column(nullable = false, length = 50)
-    private double tax_payment;
+    private Double tax_payment;
 
     @Column(nullable = false, length = 50)
-    private double performance;
+    private Double performance;
 
-    public Management(Long id, int fac_year, int quarterly, double tax_payment, double performance) {
+    public Management(Long id, int fac_year, int quarterly, Double tax_payment, Double performance) {
         this.id = id;
         this.fac_year = fac_year;
         this.quarterly = quarterly;
@@ -42,35 +42,35 @@ public class Management {
         this.id = id;
     }
 
-    public int getFac_year() {
+    public Integer getFac_year() {
         return fac_year;
     }
 
-    public void setFac_year(int fac_year) {
+    public void setFac_year(Integer fac_year) {
         this.fac_year = fac_year;
     }
 
-    public int getQuarterly() {
+    public Integer getQuarterly() {
         return quarterly;
     }
 
-    public void setQuarterly(int quarterly) {
+    public void setQuarterly(Integer quarterly) {
         this.quarterly = quarterly;
     }
 
-    public double getTax_payment() {
+    public Double getTax_payment() {
         return tax_payment;
     }
 
-    public void setTax_payment(double tax_payment) {
+    public void setTax_payment(Double tax_payment) {
         this.tax_payment = tax_payment;
     }
 
-    public double getPerformance() {
+    public Double getPerformance() {
         return performance;
     }
 
-    public void setPerformance(double performance) {
+    public void setPerformance(Double performance) {
         this.performance = performance;
     }
 }
