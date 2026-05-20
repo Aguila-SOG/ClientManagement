@@ -130,37 +130,26 @@ public class BillDAO {
         }
     }
 
-    public Bill editBill(Long id, String factura_type, String price_Paypal, String title, boolean is_made, LocalDate bill_date, double price_eu, double price_us, Customer customer_id) {
+    public Bill editBill(Bill bill) {
         String query = "UPDATE bill SET factura_type = ?, price_Paypal = ?, title = ?, is_made = ?, bill_date = ?, price_eu = ?, price_us = ?, customer_id = ? WHERE id_number = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, factura_type);
-            preparedStatement.setString(2, price_Paypal);
-            preparedStatement.setString(3, title);
-            preparedStatement.setBoolean(4, is_made);
-            preparedStatement.setDate(5, Date.valueOf(bill_date));
-            preparedStatement.setDouble(6, price_eu);
-            preparedStatement.setDouble(7, price_us);
-            preparedStatement.setLong(8, customer_id.getId());
-            //preparedStatement.setLong(8, bill.getCustomer().getId());
-            preparedStatement.setLong(9, id);
+            preparedStatement.setString(1, bill.getFactura_type());
+            preparedStatement.setString(2, bill.getPrice_Paypal());
+            preparedStatement.setString(3, bill.getTitle());
+            preparedStatement.setBoolean(4, bill.isIs_made());
+            preparedStatement.setDate(5, Date.valueOf(bill.getBill_date()));
+            preparedStatement.setDouble(6, bill.getPrice_eu());
+            preparedStatement.setDouble(7, bill.getPrice_us());
+            preparedStatement.setLong(8, bill.getCustomer().getId());
+            preparedStatement.setLong(9, bill.getIdNumber());
             int updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got "+updated);
             }
 
-            return new Bill(
-                    id,
-                    factura_type,
-                    price_Paypal,
-                    title,
-                    is_made,
-                    bill_date,
-                    price_eu,
-                    price_us,
-                    customer_id
-            );
+            return bill;
         } catch (SQLException e) {
             throw new RuntimeException("Error edit bill", e);
         }
