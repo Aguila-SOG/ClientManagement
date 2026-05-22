@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
 
     @Column(nullable = false, length = 40)
