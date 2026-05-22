@@ -18,13 +18,12 @@ public class ManagementDAO {
 
     public List<Management> findAll(){
         List<Management> managements = new ArrayList<>();
-        String query = "SELECT id, fac_year, quarterly, tax_payment, performance FROM management";
+        String query = "SELECT fac_year, quarterly, tax_payment, performance FROM management";
         try(Connection connection = dataSource.getConnection();
             Statement statement = connection.createStatement();){
             ResultSet resultSet = statement.executeQuery(query);
             while(resultSet.next()){
                 Management management = new Management(
-                        resultSet.getLong("id"),
                         resultSet.getInt("fac_year"),
                         resultSet.getInt("quarterly"),
                         resultSet.getDouble("tax_payment"),
@@ -39,10 +38,9 @@ public class ManagementDAO {
     }
 
     public Management createManagement(Management management) {
-        String query = "INSERT INTO management (id, fac_year, quarterly, tax_payment, performance) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO management (fac_year, quarterly, tax_payment, performance) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, management.getId());
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(2, management.getFac_year());
             preparedStatement.setInt(3, management.getQuarterly());
             preparedStatement.setDouble(4, management.getTax_payment());
@@ -51,27 +49,22 @@ public class ManagementDAO {
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got " + updated);
             }
-            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    management.setId(resultSet.getLong(1));
-                }
-            }
             return management;
         } catch (SQLException e) {
             throw new RuntimeException("Error creating management", e);
         }
     }
 
-    public Management findManagement(Long id){
+    public Management findManagement(int fac_year, int quarterly){
         Management management = null;
-        String query = "SELECT id, fac_year, quarterly, tax_payment, performance FROM management WHERE id = ?";
+        String query = "SELECT fac_year, quarterly, tax_payment, performance FROM management WHERE fac_year = ? and quarterly = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setInt(1, fac_year);
+            preparedStatement.setInt(2, quarterly);
             ResultSet resultSet = preparedStatement.executeQuery(query);
             while(resultSet.next()){
                 management = new Management(
-                        resultSet.getLong("id"),
                         resultSet.getInt("fac_year"),
                         resultSet.getInt("quarterly"),
                         resultSet.getDouble("tax_payment"),
@@ -84,24 +77,19 @@ public class ManagementDAO {
         return management;
     }
 
-    public Management editManagement(Long id, Integer fac_year, Integer quarterly, double tax_payment, double performance){
-        Management management = null;
-        String query = "UPDATE management SET fac_year = ?, quarterly = ?, tax_payment = ?, performance = ? WHERE id = ?";
+    public Management editManagement(Management management){
+        String query = "UPDATE management SET fac_year = ?, quarterly = ?, tax_payment = ?, performance = ? WHERE fac_year = ? and quarterly = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setInt(1, fac_year);
-            preparedStatement.setInt(2, quarterly);
-            preparedStatement.setDouble(3, tax_payment);
-            preparedStatement.setDouble(4, performance);
-            preparedStatement.setLong(5, id);
+            preparedStatement.setInt(1, management.getFac_year());
+            preparedStatement.setInt(2, management.getQuarterly());
+            preparedStatement.setDouble(3, management.getTax_payment());
+            preparedStatement.setDouble(4, management.getPerformance());
+            preparedStatement.setInt(5, management.getFac_year());
+            preparedStatement.setInt(6, management.getQuarterly());
             Integer updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row updated, got " + updated);
-            }
-            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                if (resultSet.next()) {
-                    management.setId(resultSet.getLong(1));
-                }
             }
             return management;
         } catch (SQLException e) {
@@ -109,11 +97,12 @@ public class ManagementDAO {
         }
     }
 
-    public void deleteManagement(Long id){
-        String query = "DELETE FROM management WHERE id = ?";
+    public void deleteManagement(int fac_year, int quarterly){
+        String query = "DELETE FROM management  WHERE fac_year = ? and quarterly = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, fac_year);
+            preparedStatement.setLong(2, quarterly);
             Integer updated = preparedStatement.executeUpdate();
             if (updated != 1) {
                 throw new SQLException("Expected 1 row deleted, got " + updated);

@@ -21,16 +21,15 @@ public class ManagementController {
     }
 
     @GetMapping("/{id}")
-    public Management findById(@PathVariable Long id) {
-        return managementService.findById(id);
+    public Management findManagement(@PathVariable int year, @PathVariable int quarterly) {
+        return managementService.findManagement(year, quarterly);
     }
 
     @PutMapping("/{id}")
-    public Management update(
-            @PathVariable Long id,
+    public Management editManagement(
             @RequestBody Management management) {
 
-        return managementService.update(id, management);
+        return managementService.editManagement(management);
     }
 
     @PostMapping
@@ -39,7 +38,7 @@ public class ManagementController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        managementService.delete(id);
+    public void deleteManagement(@PathVariable int year, @PathVariable int quarterly) {
+        managementService.deleteManagement(year, quarterly);
     }
 }

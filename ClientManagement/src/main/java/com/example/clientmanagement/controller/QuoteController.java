@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/quotes")
 public class QuoteController {
@@ -16,12 +16,12 @@ public class QuoteController {
         this.quoteService = quoteService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Quote> findAll() {
         return quoteService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Quote create(@RequestBody Quote quote) {
         return quoteService.create(quote);
     }
@@ -32,12 +32,12 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}")
-    public Quote editQuote(@PathVariable Long id, @RequestBody Quote quote) {
-        return quoteService.editQuote(id, quote.getYear(), quote.getQuarterly(), quote.getFac_import(), quote.getPerformance());
+    public Quote editQuote(@RequestBody Quote quote) {
+        return quoteService.editQuote(quote);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteQuote(@PathVariable Long id) {
-        quoteService.deleteQuote(id);
+    public void deleteQuote(@PathVariable int year, @PathVariable int quarterly) {
+        quoteService.deleteQuote(year, quarterly);
     }
 }

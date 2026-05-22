@@ -19,7 +19,7 @@ public class QuoteDAO {
 
     public List<Quote> findAll() {
         List<Quote> quotes = new ArrayList<>();
-        String query = "SELECT id_number, year, quarterly, fac_import, performance FROM quote";
+        String query = "SELECT year, quarterly, fac_import, date_pay FROM quote";
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
@@ -27,11 +27,10 @@ public class QuoteDAO {
 
             while (resultSet.next()) {
                 Quote quote = new Quote();
-                quote.setIdNumber(resultSet.getLong("id_number"));
                 quote.setYear(resultSet.getInt("year"));
                 quote.setQuarterly(resultSet.getInt("quarterly"));
                 quote.setFac_import(resultSet.getInt("fac_import"));
-                quote.setPerformance(resultSet.getInt("performance"));
+                quote.setDate_pay(resultSet.getDate("date_pay"));
                 quotes.add(quote);
             }
 
@@ -43,27 +42,21 @@ public class QuoteDAO {
     }
 
     public Quote create(Quote quote) {
-        String query = "INSERT INTO quote (year, quarterly, fac_import, performance) VALUES (?, ?, ?, ?) ";
+        String query = "INSERT INTO quote (year, quarterly, fac_import, date_pay) VALUES (?, ?, ?, ?) ";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                     connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, quote.getYear());
             preparedStatement.setInt(2, quote.getQuarterly());
             preparedStatement.setInt(3, quote.getFac_import());
-            preparedStatement.setInt(4, quote.getPerformance());
+            preparedStatement.setDate(4, quote.getDate_pay());
 
             int updated = preparedStatement.executeUpdate();
 
             if (updated != 1) {
                 throw new SQLException("Expected 1 row inserted, got " + updated);
-            }
-
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    quote.setIdNumber(generatedKeys.getLong(1));
-                }
             }
 
             return quote;
@@ -75,7 +68,7 @@ public class QuoteDAO {
 
     public List<Quote> findQuote(int year) {
         List<Quote> quotes = new ArrayList<>();
-        String query = "SELECT id_number, year, quarterly, fac_import, performance FROM quote WHERE year = ?";
+        String query = "SELECT year, quarterly, fac_import, date_pay FROM quote WHERE year = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -85,11 +78,10 @@ public class QuoteDAO {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     Quote quote = new Quote();
-                    quote.setIdNumber(resultSet.getLong("id_number"));
                     quote.setYear(resultSet.getInt("year"));
                     quote.setQuarterly(resultSet.getInt("quarterly"));
                     quote.setFac_import(resultSet.getInt("fac_import"));
-                    quote.setPerformance(resultSet.getInt("performance"));
+                    quote.setDate_pay(resultSet.getDate("date_pay"));
                     quotes.add(quote);
                 }
             }
@@ -100,45 +92,38 @@ public class QuoteDAO {
         return quotes;
     }
 
-    public Quote editQuote(Long id, int year, int quarterly, int facImport, int performance) {
-        String query = "UPDATE quote SET year = ?, quarterly = ?, fac_import = ?, performance = ? WHERE id_number = ?";
+    public Quote editQuote(Quote quote) {
+        String query = "UPDATE quote SET year = ?, quarterly = ?, fac_import = ?, date_pay = ? WHERE year = ? and quarterly = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, year);
-            preparedStatement.setInt(2, quarterly);
-            preparedStatement.setInt(3, facImport);
-            preparedStatement.setInt(4, performance);
-            preparedStatement.setLong(5, id);
+            preparedStatement.setInt(1, quote.getYear());
+            preparedStatement.setInt(2, quote.getQuarterly());
+            preparedStatement.setInt(3, quote.getFac_import());
+            preparedStatement.setDate(4, quote.getDate_pay());
+            preparedStatement.setInt(5, quote.getYear());
+            preparedStatement.setInt(2, quote.getQuarterly());
 
             int updated = preparedStatement.executeUpdate();
 
             if (updated != 1) {
                 throw new SQLException("Expected 1 row updated, got " + updated);
             }
-
-            Quote quote = new Quote();
-            quote.setIdNumber(id);
-            quote.setYear(year);
-            quote.setQuarterly(quarterly);
-            quote.setFac_import(facImport);
-            quote.setPerformance(performance);
-
             return quote;
-
         } catch (SQLException e) {
             throw new RuntimeException("Error editing quote", e);
         }
     }
 
-    public void deleteQuote(Long id) {
-        String query = "DELETE FROM quote WHERE id_number = ?";
+    public void deleteQuote(int year, int quarterly) {
+        String query = "DELETE FROM quote WHERE year = ? and quarterly = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setLong(1, id);
+            preparedStatement.setLong(1, year);
+            preparedStatement.setLong(1, quarterly);
 
             int deleted = preparedStatement.executeUpdate();
 

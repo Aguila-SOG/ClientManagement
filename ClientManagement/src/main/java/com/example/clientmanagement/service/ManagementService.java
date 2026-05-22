@@ -34,22 +34,16 @@ public class ManagementService {
         managementDAO.createManagement(management);
     }
 
-    public Management findById(Long id) {
-        return managementDAO.findManagement(id);
+    public Management findManagement(int year, int quarterly) {
+        return managementDAO.findManagement(year, quarterly);
     }
 
-    public Management update(Long id, Management management) {
-        return managementDAO.editManagement(
-                id,
-                management.getFac_year(),
-                management.getQuarterly(),
-                management.getTax_payment(),
-                management.getPerformance()
-        );
+    public Management editManagement(Management management) {
+        return managementDAO.editManagement(management);
     }
 
-    public void delete(Long id) {
-        managementDAO.deleteManagement(id);
+    public void deleteManagement(int year, int quarterly) {
+        managementDAO.deleteManagement(year, quarterly);
     }
 
     private int calculateQuarter(){
