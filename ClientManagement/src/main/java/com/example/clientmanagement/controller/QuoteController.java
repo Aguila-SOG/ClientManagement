@@ -5,8 +5,7 @@ import com.example.clientmanagement.service.QuoteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/quotes")
 public class QuoteController {
@@ -16,12 +15,12 @@ public class QuoteController {
         this.quoteService = quoteService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Quote> findAll() {
         return quoteService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public Quote create(@RequestBody Quote quote) {
         return quoteService.create(quote);
     }
