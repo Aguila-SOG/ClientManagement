@@ -29,7 +29,7 @@ public class BillService {
     public Bill findBillById(Long id) {
         Bill bill = billDAO.findBill(id);
         if (bill == null) {
-            throw new EntityNotFoundException("The bill with the id: '"+"' does not exist");
+            throw new EntityNotFoundException("The bill with the id: '"+id+"' does not exist");
         }
         return bill;
     }
