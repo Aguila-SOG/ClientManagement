@@ -58,19 +58,19 @@ public class Management {
         this.quarterly = quarterly;
     }
 
-    public Double getTax_payment() {
-        return tax_payment;
-    }
-
-    public void setTax_payment(Double tax_payment) {
-        this.tax_payment = tax_payment;
-    }
-
     public Double getPerformance() {
         return performance;
     }
 
     public void setPerformance(Double performance) {
         this.performance = performance;
+    }
+
+    public Double getTax_payment() {
+        return tax_payment;
+    }
+
+    public void setTax_payment(Double tax_payment) {
+        this.tax_payment = tax_payment;
     }
 }

@@ -48,18 +48,21 @@ public class BillController {
     }
 
     @PostMapping
+    @Operation(summary= "Crea una factura")
     public ResponseEntity<Bill> create(@RequestBody Bill bill) throws SQLException {
         billService.create(bill);
         return ResponseEntity.created(URI.create("/bill/"+bill.getIdNumber())).body(bill);
     }
 
     @PutMapping
+    @Operation(summary = "Edita ua factura")
     public ResponseEntity<Bill> editBill(@RequestBody Bill bill) throws SQLException {
         Bill edited = billService.editBill(bill);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "elimina una factura")
     public ResponseEntity<Void> deleteBill(@PathVariable Long id) throws SQLException {
         billService.deleteBill(id);
         return ResponseEntity.noContent().build();

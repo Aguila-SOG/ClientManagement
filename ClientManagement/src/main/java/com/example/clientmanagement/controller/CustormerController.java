@@ -2,6 +2,7 @@ package com.example.clientmanagement.controller;
 
 import com.example.clientmanagement.entity.Customer;
 import com.example.clientmanagement.service.CustomerService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 @CrossOrigin(origins="*")
 @RestController
+@Tag(name="Clientes")
 @RequestMapping("/customers")
 public class CustormerController {
     private final CustomerService customerService;

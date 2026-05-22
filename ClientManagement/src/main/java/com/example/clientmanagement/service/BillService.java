@@ -47,7 +47,6 @@ public class BillService {
     public Bill editBill(Bill bill) {
         return billDAO.editBill(bill);
     }
-
     public void deleteBill(Long id) {
         billDAO.deleteBill(id);
     }
