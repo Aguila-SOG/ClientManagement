@@ -73,4 +73,8 @@ public class Management {
     public void setPerformance(Double performance) {
         this.performance = performance;
     }
+
+    public Integer getFacYear() {
+        return fac_year;
+    }
 }
