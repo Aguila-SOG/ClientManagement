@@ -11,7 +11,7 @@ public class Management {
     private Long id;
 
     @Column(nullable = false, length = 4)
-    private Integer fac_year;
+    private Integer facYear;
 
     @Column(nullable = false, length = 1)
     private Integer quarterly;
@@ -22,9 +22,9 @@ public class Management {
     @Column(nullable = false, length = 50)
     private Double performance;
 
-    public Management(Long id, int fac_year, int quarterly, Double tax_payment, Double performance) {
+    public Management(Long id, int facYear, int quarterly, Double tax_payment, Double performance) {
         this.id = id;
-        this.fac_year = fac_year;
+        this.facYear = facYear;
         this.quarterly = quarterly;
         this.tax_payment = tax_payment;
         this.performance = performance;
@@ -42,12 +42,12 @@ public class Management {
         this.id = id;
     }
 
-    public Integer getFac_year() {
-        return fac_year;
+    public Integer getFacYear() {
+        return facYear;
     }
 
-    public void setFac_year(Integer fac_year) {
-        this.fac_year = fac_year;
+    public void setFacYear(Integer facYear) {
+        this.facYear = facYear;
     }
 
     public Integer getQuarterly() {
@@ -72,9 +72,5 @@ public class Management {
 
     public void setPerformance(Double performance) {
         this.performance = performance;
-    }
-
-    public Integer getFacYear() {
-        return fac_year;
     }
 }

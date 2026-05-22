@@ -29,7 +29,7 @@ public class ManagementService {
     public Management update(Long id, Management management) {
         Management existing = findById(id);
 
-        existing.setFac_year(management.getFac_year());
+        existing.setFacYear(management.getFacYear());
         existing.setQuarterly(management.getQuarterly());
         existing.setTax_payment(management.getTax_payment());
         existing.setPerformance(management.getPerformance());

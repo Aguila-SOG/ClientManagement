@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.net.URI;
 import java.sql.SQLException;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/bill")
+@Tag(name="Facturas", description = "Operaciones de los pagos de los clientes")
 public class BillController {
 
     private final BillService billService;
@@ -23,16 +26,19 @@ public class BillController {
     }
 
     @GetMapping
+    @Operation(summary = "Busca todas las facturas")
     public ResponseEntity<List<Bill>> findAll() throws SQLException {
         return ResponseEntity.ok(billService.findAll());
     }
 
     @GetMapping("/customer/{id_customer}")
+    @Operation(summary = "Busca todas las facturas de un cliente")
     public ResponseEntity<List<Bill>> findAllByClient(@PathVariable("id_customer") long id) throws SQLException {
         return ResponseEntity.ok(billService.findAllByClient(id));
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Busca todas las facturas mediante el ID del cliente")
     public ResponseEntity<Bill> findBillById(@PathVariable Long id) throws SQLException, ResponseStatusException {
         Bill bill = billService.findBillById(id);
         if (bill == null) {

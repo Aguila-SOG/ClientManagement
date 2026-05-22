@@ -33,7 +33,7 @@ public class QuoteController {
 
     @PutMapping("/{id}")
     public Quote editQuote(@PathVariable Long id, @RequestBody Quote quote) {
-        return quoteService.editQuote(id, quote.getYear(), quote.getQuarterly(), quote.getFac_import(), quote.getPerformance());
+        return quoteService.editQuote(id, quote.getYearOfQuote(), quote.getQuarterly(), quote.getFac_import(), quote.getPerformance());
     }
 
     @DeleteMapping("/{id}")

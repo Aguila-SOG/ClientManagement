@@ -28,7 +28,7 @@ public class QuoteDAO {
             while (resultSet.next()) {
                 Quote quote = new Quote();
                 quote.setIdNumber(resultSet.getLong("id_number"));
-                quote.setYear(resultSet.getInt("year"));
+                quote.setYearOfQuote(resultSet.getInt("year"));
                 quote.setQuarterly(resultSet.getInt("quarterly"));
                 quote.setFac_import(resultSet.getInt("fac_import"));
                 quote.setPerformance(resultSet.getInt("performance"));
@@ -49,7 +49,7 @@ public class QuoteDAO {
              PreparedStatement preparedStatement =
                      connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setInt(1, quote.getYear());
+            preparedStatement.setInt(1, quote.getYearOfQuote());
             preparedStatement.setInt(2, quote.getQuarterly());
             preparedStatement.setInt(3, quote.getFac_import());
             preparedStatement.setInt(4, quote.getPerformance());
@@ -86,7 +86,7 @@ public class QuoteDAO {
                 while (resultSet.next()) {
                     Quote quote = new Quote();
                     quote.setIdNumber(resultSet.getLong("id_number"));
-                    quote.setYear(resultSet.getInt("year"));
+                    quote.setYearOfQuote(resultSet.getInt("year"));
                     quote.setQuarterly(resultSet.getInt("quarterly"));
                     quote.setFac_import(resultSet.getInt("fac_import"));
                     quote.setPerformance(resultSet.getInt("performance"));
@@ -120,7 +120,7 @@ public class QuoteDAO {
 
             Quote quote = new Quote();
             quote.setIdNumber(id);
-            quote.setYear(year);
+            quote.setYearOfQuote(year);
             quote.setQuarterly(quarterly);
             quote.setFac_import(facImport);
             quote.setPerformance(performance);

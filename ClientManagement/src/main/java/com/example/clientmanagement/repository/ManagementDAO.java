@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface ManagementDAO extends JpaRepository<Management, Long> {
 
-    List<Management> findByFac_year(Integer fac_year);
+    List<Management> findByFacYear(Integer fac_year);
 
-    Management findByFac_yearAndQuarterly(Integer fac_year, Integer quarterly);
+    Management findByFacYearAndQuarterly(Integer facYear, Integer quarterly);
 }

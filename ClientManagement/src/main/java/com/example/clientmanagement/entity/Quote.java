@@ -11,7 +11,7 @@ public class Quote {
     private Long idNumber;
 
     @Column(nullable = false)
-    private Integer year;
+    private Integer yearOfQuote;
 
     @Column(nullable = false)
     private Integer quarterly;
@@ -30,12 +30,12 @@ public class Quote {
         this.idNumber = idNumber;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getYearOfQuote() {
+        return yearOfQuote;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setYearOfQuote(Integer year) {
+        this.yearOfQuote = year;
     }
 
     public Integer getQuarterly() {
