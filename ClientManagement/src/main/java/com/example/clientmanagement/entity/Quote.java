@@ -34,8 +34,8 @@ public class Quote {
         return yearOfQuote;
     }
 
-    public void setYearOfQuote(Integer year) {
-        this.yearOfQuote = year;
+    public void setYearOfQuote(Integer yearOfQuote) {
+        this.yearOfQuote = yearOfQuote;
     }
 
     public Integer getQuarterly() {
