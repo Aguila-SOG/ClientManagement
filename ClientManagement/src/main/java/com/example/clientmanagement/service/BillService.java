@@ -35,7 +35,7 @@ public class BillService {
     }
 
     public Bill create(Bill bill) {
-        if (bill.getPrice_eu() < 0 || bill.getPrice_us() < 0) {
+        if (bill.getPriceEu() < 0 || bill.getPriceUs() < 0) {
             throw new IllegalArgumentException("The price can't be a negative number");
         }
         if (bill.getCustomer() == null || bill.getCustomer().getId() == null) {

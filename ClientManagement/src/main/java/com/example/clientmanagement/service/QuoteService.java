@@ -26,8 +26,8 @@ public class QuoteService {
         return quoteDAO.findQuote(year);
     }
 
-    public Quote editQuote(Long id, int year, int quarterly, int facImport, int performance) {
-        return quoteDAO.editQuote(id, year, quarterly, facImport, performance);
+    public Quote editQuote(Long id, Quote quote) {
+        return quoteDAO.editQuote(id, quote);
     }
 
     public void deleteQuote(Long id) {

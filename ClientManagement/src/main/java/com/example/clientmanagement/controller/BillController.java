@@ -27,8 +27,8 @@ public class BillController {
         return ResponseEntity.ok(billService.findAll());
     }
 
-    @GetMapping("/customer/{id_customer}")
-    public ResponseEntity<List<Bill>> findAllByClient(@PathVariable("id_customer") long id) throws SQLException {
+    @GetMapping("/customer/{idCustomer}")
+    public ResponseEntity<List<Bill>> findAllByClient(@PathVariable("idCustomer") long id) throws SQLException {
         return ResponseEntity.ok(billService.findAllByClient(id));
     }
 

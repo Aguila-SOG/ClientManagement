@@ -7,20 +7,20 @@ import jakarta.persistence.*;
 public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_number")
+    @Column(name = "idNumber")
     private Long idNumber;
 
     @Column(nullable = false)
     private Integer year;
 
     @Column(nullable = false)
-    private Integer quarterly;
+    private double quarterly;
 
     @Column(nullable = false)
-    private Integer fac_import;
+    private double facImport;
 
     @Column(nullable = false)
-    private Integer performance;
+    private double performance;
 
     public Long getIdNumber() {
         return idNumber;
@@ -38,27 +38,27 @@ public class Quote {
         this.year = year;
     }
 
-    public Integer getQuarterly() {
+    public double getQuarterly() {
         return quarterly;
     }
 
-    public void setQuarterly(Integer quarterly) {
+    public void setQuarterly(Double quarterly) {
         this.quarterly = quarterly;
     }
 
-    public Integer getFac_import() {
-        return fac_import;
+    public double getFacImport() {
+        return facImport;
     }
 
-    public void setFac_import(Integer fac_import) {
-        this.fac_import = fac_import;
+    public void setFacImport(Double facImport) {
+        this.facImport = facImport;
     }
 
-    public Integer getPerformance() {
+    public double getPerformance() {
         return performance;
     }
 
-    public void setPerformance(Integer performance) {
+    public void setPerformance(Double performance) {
         this.performance = performance;
     }
 }
