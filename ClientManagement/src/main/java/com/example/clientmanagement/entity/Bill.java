@@ -16,7 +16,7 @@ public class Bill {
     private String facturaType;
 
     @Column(length = 25, nullable = false)
-    private String pricePaypal;
+    private double pricePaypal;
 
     @Column(length = 25, nullable = false)
     private String title;
@@ -37,7 +37,7 @@ public class Bill {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Bill(Long idNumber, String facturaType, String pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
+    public Bill(Long idNumber, String facturaType, double pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
         this.idNumber = idNumber;
         this.facturaType = facturaType;
         this.pricePaypal = pricePaypal;
@@ -69,11 +69,11 @@ public class Bill {
         this.facturaType = factura_type;
     }
 
-    public String getPricePaypal() {
+    public double getPricePaypal() {
         return pricePaypal;
     }
 
-    public void setPricePaypal(String price_Paypal) {
+    public void setPricePaypal(double price_Paypal) {
         this.pricePaypal = price_Paypal;
     }
 
