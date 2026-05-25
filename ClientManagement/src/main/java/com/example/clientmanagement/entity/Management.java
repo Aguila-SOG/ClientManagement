@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "management")
+@IdClass(Management.class)
 public class Management {
     @Id
     @Column(length = 4)
