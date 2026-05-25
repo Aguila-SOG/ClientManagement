@@ -26,17 +26,17 @@ public class QuoteController {
         return quoteService.create(quote);
     }
 
-    @GetMapping("/{year}")
+    @GetMapping("/search/{year}")
     public List<Quote> findQuote(@PathVariable int year) {
         return quoteService.findQuote(year);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit")
     public Quote editQuote(@RequestBody Quote quote) {
         return quoteService.editQuote(quote);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{year}/{quarterly}")
     public void deleteQuote(@PathVariable int year, @PathVariable int quarterly) {
         quoteService.deleteQuote(year, quarterly);
     }

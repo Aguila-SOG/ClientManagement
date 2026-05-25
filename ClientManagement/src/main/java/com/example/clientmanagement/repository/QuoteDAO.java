@@ -103,7 +103,7 @@ public class QuoteDAO {
             preparedStatement.setInt(3, quote.getFac_import());
             preparedStatement.setDate(4, quote.getDate_pay());
             preparedStatement.setInt(5, quote.getYear());
-            preparedStatement.setInt(2, quote.getQuarterly());
+            preparedStatement.setInt(6, quote.getQuarterly());
 
             int updated = preparedStatement.executeUpdate();
 
@@ -123,7 +123,7 @@ public class QuoteDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setLong(1, year);
-            preparedStatement.setLong(1, quarterly);
+            preparedStatement.setLong(2, quarterly);
 
             int deleted = preparedStatement.executeUpdate();
 
