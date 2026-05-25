@@ -20,7 +20,7 @@ public class QuoteDAO {
     }
 
     public List<Quote> findQuote(int year) {
-        return entityManager.createQuery("from Quote where year = :yearComparable", Quote.class)
+        return entityManager.createQuery("from Quote where quoteYear = :yearComparable", Quote.class)
                 .setParameter("yearComparable", year)
                 .getResultList();
     }
@@ -38,7 +38,7 @@ public class QuoteDAO {
 
     @Transactional
     public void deleteQuote(int year, int quarterly) {
-        entityManager.createQuery("DELETE FROM Quote WHERE year = :deleteYear AND quarterly = :deleteQuarterly")
+        entityManager.createQuery("DELETE FROM Quote WHERE quoteYear = :deleteYear AND quarterly = :deleteQuarterly")
                 .setParameter("deleteYear", year)
                 .setParameter("quarterly", quarterly)
                 .executeUpdate();

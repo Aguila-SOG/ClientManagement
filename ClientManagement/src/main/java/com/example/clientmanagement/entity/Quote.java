@@ -9,7 +9,7 @@ import java.util.Date;
 public class Quote {
     @Id
     @Column(length = 4)
-    private Integer year;
+    private Integer quoteYear;
 
     @Id
     @Column(length = 1)
@@ -22,19 +22,19 @@ public class Quote {
     private Date datePay;
 
     public Quote(Integer year, Integer quarterly, Integer facImport) {
-        this.year = year;
+        this.quoteYear = year;
         this.quarterly = quarterly;
         this.facImport = facImport;
     }
 
     public Quote(){}
 
-    public Integer getYear() {
-        return year;
+    public Integer getQuoteYear() {
+        return quoteYear;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setQuoteYear(Integer year) {
+        this.quoteYear = year;
     }
 
     public Integer getQuarterly() {
