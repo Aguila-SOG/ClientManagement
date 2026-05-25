@@ -25,19 +25,6 @@ public class CustormerController {
 
     @PostMapping("/create")
     public ResponseEntity<Customer> create(@RequestBody Customer customer) {
-        if (customer == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Body is required");
-        }
-        if (customer.getNick() == null || customer.getNick().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nick is required");
-        }
-        if (customer.getPlatform() == null || customer.getPlatform().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "platform is required");
-        }
-        if (customer.getEmail() == null || customer.getEmail().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email is required");
-        }
-
         Customer created = customerService.create(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -53,16 +40,6 @@ public class CustormerController {
 
     @PutMapping("/edit")
     public ResponseEntity<Customer> editCustomer(@RequestBody Customer customer) {
-        if (customer.getNick() == null || customer.getNick().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "nick is required");
-        }
-        if (customer.getPlatform() == null || customer.getPlatform().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "platform is required");
-        }
-        if (customer.getEmail() == null || customer.getEmail().isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email is required");
-        }
-
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.editCustomer(customer));
     }
 

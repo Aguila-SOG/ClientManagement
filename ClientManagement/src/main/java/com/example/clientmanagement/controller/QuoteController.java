@@ -5,8 +5,7 @@ import com.example.clientmanagement.service.QuoteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/quotes")
 public class QuoteController {

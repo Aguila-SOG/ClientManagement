@@ -5,7 +5,7 @@ import com.example.clientmanagement.service.ManagementService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/management")
 public class ManagementController {

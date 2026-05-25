@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
-
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/bill")
 public class BillController {
