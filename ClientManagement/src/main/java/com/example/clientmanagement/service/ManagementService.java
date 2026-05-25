@@ -3,12 +3,12 @@ package com.example.clientmanagement.service;
 import com.example.clientmanagement.entity.Management;
 import com.example.clientmanagement.repository.ManagementDAO;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class ManagementService {
+
     private final ManagementDAO managementDAO;
 
     public ManagementService(ManagementDAO managementDAO){
@@ -30,20 +30,27 @@ public class ManagementService {
             throw new IllegalArgumentException("Performance is required");
         }
         management.setQuarterly(calculateQuarter());
-
-        managementDAO.createManagement(management);
+        managementDAO.save(management);
     }
 
     public Management findManagement(int year, int quarterly) {
-        return managementDAO.findManagement(year, quarterly);
+        Management record = managementDAO.findByFacYearAndQuarterly(year, quarterly);
+        if (record == null) {
+            throw new RuntimeException("Management record not found");
+        }
+        return record;
     }
 
-    public Management editManagement(Management management) {
-        return managementDAO.editManagement(management);
+    public Management editManagement(int year, int quarterly, Management management) {
+        Management existing = findManagement(year, quarterly);
+        existing.setTaxPayment(management.getTaxPayment());
+        existing.setPerformance(management.getPerformance());
+        return managementDAO.save(existing);
     }
 
     public void deleteManagement(int year, int quarterly) {
-        managementDAO.deleteManagement(year, quarterly);
+        Management existing = findManagement(year, quarterly);
+        managementDAO.delete(existing);
     }
 
     private int calculateQuarter(){

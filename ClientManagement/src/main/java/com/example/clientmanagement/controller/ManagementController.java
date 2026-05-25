@@ -9,6 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/management")
 public class ManagementController {
+
     private final ManagementService managementService;
 
     public ManagementController(ManagementService managementService) {
@@ -20,26 +21,27 @@ public class ManagementController {
         return managementService.findAll();
     }
 
-    @GetMapping("/select/{id}")
-    public Management findById(@PathVariable Long id) {
-        return managementService.findById(id);
+    @GetMapping("/{facYear}/{quarterly}")
+    public Management findById(@PathVariable int facYear, @PathVariable int quarterly) {
+        return managementService.findManagement(facYear, quarterly);
     }
 
-    @PutMapping("/update/{id}")
-    public Management update(
-            @PathVariable Long id,
-            @RequestBody Management management) {
-
-        return managementService.update(id, management);
-    }
-
-    @PostMapping("/add")
-    public void create(@RequestBody Management management) {
+    @PostMapping("/create")
+    public Management create(@RequestBody Management management) {
         managementService.createManagement(management);
+        return management;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
-        managementService.delete(id);
+    @PutMapping("/edit/{facYear}/{quarterly}")
+    public Management update(
+            @PathVariable int facYear,
+            @PathVariable int quarterly,
+            @RequestBody Management management) {
+        return managementService.editManagement(facYear, quarterly, management);
+    }
+
+    @DeleteMapping("/delete/{facYear}/{quarterly}")
+    public void delete(@PathVariable int facYear, @PathVariable int quarterly) {
+        managementService.deleteManagement(facYear, quarterly);
     }
 }
