@@ -15,17 +15,17 @@ public class ManagementController {
         this.managementService = managementService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Management> findAll(){
         return managementService.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/select/{id}")
     public Management findById(@PathVariable Long id) {
         return managementService.findById(id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Management update(
             @PathVariable Long id,
             @RequestBody Management management) {
@@ -33,12 +33,12 @@ public class ManagementController {
         return managementService.update(id, management);
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public void create(@RequestBody Management management) {
         managementService.createManagement(management);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         managementService.delete(id);
     }
