@@ -16,12 +16,12 @@ public class Quote {
     private Integer quarterly;
 
     @Column(nullable = false)
-    private Integer facImport;
+    private double facImport;
 
     @Column
     private Date datePay;
 
-    public Quote(Integer year, Integer quarterly, Integer facImport) {
+    public Quote(Integer year, Integer quarterly, double facImport) {
         this.quoteYear = year;
         this.quarterly = quarterly;
         this.facImport = facImport;
@@ -45,11 +45,11 @@ public class Quote {
         this.quarterly = quarterly;
     }
 
-    public Integer getFacImport() {
+    public double getFacImport() {
         return facImport;
     }
 
-    public void setFacImport(Integer facImport) {
+    public void setFacImport(double facImport) {
         this.facImport = facImport;
     }
 
