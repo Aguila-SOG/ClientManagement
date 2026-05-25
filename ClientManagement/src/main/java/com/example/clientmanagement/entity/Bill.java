@@ -13,39 +13,39 @@ public class Bill {
     private Long idNumber;
 
     @Column(length = 25, nullable = false)
-    private String factura_type;
+    private String facturaType;
 
     @Column(length = 25, nullable = false)
-    private String price_Paypal;
+    private String pricePaypal;
 
     @Column(length = 25, nullable = false)
     private String title;
 
     @Column(nullable = false)
-    private boolean is_made;
+    private boolean isMade;
 
     @Column(nullable = false)
-    private LocalDate bill_date;
+    private LocalDate billDate;
 
     @Column(nullable = false)
-    private double price_eu;
+    private double priceEu;
 
     @Column(nullable = false)
-    private double price_us;
+    private double priceUs;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Bill(Long idNumber, String factura_type, String price_Paypal, String title, boolean is_made, LocalDate bill_date, double price_eu, double price_us, Customer customer) {
+    public Bill(Long idNumber, String facturaType, String pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
         this.idNumber = idNumber;
-        this.factura_type = factura_type;
-        this.price_Paypal = price_Paypal;
+        this.facturaType = facturaType;
+        this.pricePaypal = pricePaypal;
         this.title = title;
-        this.is_made = is_made;
-        this.bill_date = bill_date;
-        this.price_eu = price_eu;
-        this.price_us = price_us;
+        this.isMade = isMade;
+        this.billDate = billDate;
+        this.priceEu = priceEu;
+        this.priceUs = priceUs;
         this.customer = customer;
     }
 
@@ -61,20 +61,20 @@ public class Bill {
         this.idNumber = idNumber;
     }
 
-    public String getFactura_type() {
-        return factura_type;
+    public String getFacturaType() {
+        return facturaType;
     }
 
-    public void setFactura_type(String factura_type) {
-        this.factura_type = factura_type;
+    public void setFacturaType(String factura_type) {
+        this.facturaType = factura_type;
     }
 
-    public String getPrice_Paypal() {
-        return price_Paypal;
+    public String getPricePaypal() {
+        return pricePaypal;
     }
 
-    public void setPrice_Paypal(String price_Paypal) {
-        this.price_Paypal = price_Paypal;
+    public void setPricePaypal(String price_Paypal) {
+        this.pricePaypal = price_Paypal;
     }
 
     public String getTitle() {
@@ -86,35 +86,35 @@ public class Bill {
     }
 
     public boolean isIs_made() {
-        return is_made;
+        return isMade;
     }
 
-    public void setIs_made(boolean is_made) {
-        this.is_made = is_made;
+    public void setIs_made(boolean isMade) {
+        this.isMade = isMade;
     }
 
-    public LocalDate getBill_date() {
-        return bill_date;
+    public LocalDate getBillDate() {
+        return billDate;
     }
 
-    public void setBill_date(LocalDate bill_date) {
-        this.bill_date = bill_date;
+    public void setBill_date(LocalDate billDate) {
+        this.billDate = billDate;
     }
 
-    public double getPrice_eu() {
-        return price_eu;
+    public double getPriceEu() {
+        return priceEu;
     }
 
-    public void setPrice_eu(double price_eu) {
-        this.price_eu = price_eu;
+    public void setPriceEu(double priceEu) {
+        this.priceEu = priceEu;
     }
 
-    public double getPrice_us() {
-        return price_us;
+    public double getPriceUs() {
+        return priceUs;
     }
 
-    public void setPrice_us(double price_us) {
-        this.price_us = price_us;
+    public void setPriceUs(double priceUs) {
+        this.priceUs = priceUs;
     }
 
     public Customer getCustomer() {

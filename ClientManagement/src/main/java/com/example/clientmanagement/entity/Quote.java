@@ -2,33 +2,32 @@ package com.example.clientmanagement.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "quote")
 public class Quote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_number")
-    private Long idNumber;
-
-    @Column(nullable = false)
+    @Column(length = 4)
     private Integer year;
 
-    @Column(nullable = false)
+    @Id
+    @Column(length = 1)
     private Integer quarterly;
 
     @Column(nullable = false)
-    private Integer fac_import;
+    private Integer facImport;
 
-    @Column(nullable = false)
-    private Integer performance;
+    @Column
+    private Date datePay;
 
-    public Long getIdNumber() {
-        return idNumber;
+    public Quote(Integer year, Integer quarterly, Integer facImport) {
+        this.year = year;
+        this.quarterly = quarterly;
+        this.facImport = facImport;
     }
 
-    public void setIdNumber(Long idNumber) {
-        this.idNumber = idNumber;
-    }
+    public Quote(){}
 
     public Integer getYear() {
         return year;
@@ -46,19 +45,19 @@ public class Quote {
         this.quarterly = quarterly;
     }
 
-    public Integer getFac_import() {
-        return fac_import;
+    public Integer getFacImport() {
+        return facImport;
     }
 
-    public void setFac_import(Integer fac_import) {
-        this.fac_import = fac_import;
+    public void setFacImport(Integer facImport) {
+        this.facImport = facImport;
     }
 
-    public Integer getPerformance() {
-        return performance;
+    public Date getDatePay() {
+        return datePay;
     }
 
-    public void setPerformance(Integer performance) {
-        this.performance = performance;
+    public void setDatePay(Date datePay) {
+        this.datePay = datePay;
     }
 }

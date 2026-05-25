@@ -4,15 +4,9 @@ import com.example.clientmanagement.entity.Quote;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -43,10 +37,10 @@ public class QuoteDAO {
     }
 
     @Transactional
-    public void deleteQuote(Long id) {
-        Quote quote = entityManager.find(Quote.class, id);
-        if (quote != null) {
-            entityManager.remove(quote);
-        }
+    public void deleteQuote(int year, int quarterly) {
+        entityManager.createQuery("DELETE FROM Quote WHERE year = :deleteYear AND quarterly = :deleteQuarterly")
+                .setParameter("deleteYear", year)
+                .setParameter("quarterly", quarterly)
+                .executeUpdate();
     }
 }
