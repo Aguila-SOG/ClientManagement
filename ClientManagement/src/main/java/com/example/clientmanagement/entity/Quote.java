@@ -2,33 +2,32 @@ package com.example.clientmanagement.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "quote")
 public class Quote {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idNumber")
-    private Long idNumber;
-
-    @Column(nullable = false)
+    @Column(length = 4)
     private Integer year;
 
-    @Column(nullable = false)
-    private double quarterly;
+    @Id
+    @Column(length = 1)
+    private Integer quarterly;
 
     @Column(nullable = false)
-    private double facImport;
+    private Integer facImport;
 
-    @Column(nullable = false)
-    private double performance;
+    @Column
+    private Date datePay;
 
-    public Long getIdNumber() {
-        return idNumber;
+    public Quote(Integer year, Integer quarterly, Integer facImport) {
+        this.year = year;
+        this.quarterly = quarterly;
+        this.facImport = facImport;
     }
 
-    public void setIdNumber(Long idNumber) {
-        this.idNumber = idNumber;
-    }
+    public Quote(){}
 
     public Integer getYear() {
         return year;
@@ -38,27 +37,27 @@ public class Quote {
         this.year = year;
     }
 
-    public double getQuarterly() {
+    public Integer getQuarterly() {
         return quarterly;
     }
 
-    public void setQuarterly(Double quarterly) {
+    public void setQuarterly(Integer quarterly) {
         this.quarterly = quarterly;
     }
 
-    public double getFacImport() {
+    public Integer getFacImport() {
         return facImport;
     }
 
-    public void setFacImport(Double facImport) {
+    public void setFacImport(Integer facImport) {
         this.facImport = facImport;
     }
 
-    public double getPerformance() {
-        return performance;
+    public Date getDatePay() {
+        return datePay;
     }
 
-    public void setPerformance(Double performance) {
-        this.performance = performance;
+    public void setDatePay(Date datePay) {
+        this.datePay = datePay;
     }
 }

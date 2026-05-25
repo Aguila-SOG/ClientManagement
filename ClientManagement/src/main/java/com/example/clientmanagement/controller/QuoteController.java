@@ -32,12 +32,12 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}")
-    public Quote editQuote(@PathVariable Long id, @RequestBody Quote quote) {
-        return quoteService.editQuote(id, quote);
+    public Quote editQuote(@RequestBody Quote quote) {
+        return quoteService.editQuote(quote);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteQuote(@PathVariable Long id) {
-        quoteService.deleteQuote(id);
+    public void deleteQuote(@PathVariable int year, @PathVariable int quarterly) {
+        quoteService.deleteQuote(year, quarterly);
     }
 }

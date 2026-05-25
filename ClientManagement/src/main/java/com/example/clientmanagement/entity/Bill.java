@@ -9,14 +9,14 @@ import java.time.LocalDate;
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idNumber")
+    @Column(name = "id_number")
     private Long idNumber;
 
     @Column(length = 25, nullable = false)
     private String facturaType;
 
     @Column(length = 25, nullable = false)
-    private double pricePaypal;
+    private String pricePaypal;
 
     @Column(length = 25, nullable = false)
     private String title;
@@ -34,10 +34,10 @@ public class Bill {
     private double priceUs;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Bill(Long idNumber, String facturaType, double pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
+    public Bill(Long idNumber, String facturaType, String pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
         this.idNumber = idNumber;
         this.facturaType = facturaType;
         this.pricePaypal = pricePaypal;
@@ -53,35 +53,51 @@ public class Bill {
 
     }
 
+    public Long getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(Long idNumber) {
+        this.idNumber = idNumber;
+    }
+
     public String getFacturaType() {
         return facturaType;
     }
 
-    public void setFacturaType(String facturaType) {
-        this.facturaType = facturaType;
+    public void setFacturaType(String factura_type) {
+        this.facturaType = factura_type;
     }
 
-    public double getPricePaypal() {
+    public String getPricePaypal() {
         return pricePaypal;
     }
 
-    public void setPricePaypal(double pricePaypal) {
-        this.pricePaypal = pricePaypal;
+    public void setPricePaypal(String price_Paypal) {
+        this.pricePaypal = price_Paypal;
     }
 
-    public boolean isMade() {
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public boolean isIs_made() {
         return isMade;
     }
 
-    public void setMade(boolean made) {
-        isMade = made;
+    public void setIs_made(boolean isMade) {
+        this.isMade = isMade;
     }
 
     public LocalDate getBillDate() {
         return billDate;
     }
 
-    public void setBillDate(LocalDate billDate) {
+    public void setBill_date(LocalDate billDate) {
         this.billDate = billDate;
     }
 
@@ -99,22 +115,6 @@ public class Bill {
 
     public void setPriceUs(double priceUs) {
         this.priceUs = priceUs;
-    }
-
-    public Long getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(Long idNumber) {
-        this.idNumber = idNumber;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public Customer getCustomer() {

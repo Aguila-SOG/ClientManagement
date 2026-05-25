@@ -23,17 +23,17 @@ public class BillController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Bill>> findAll() throws SQLException {
+    public ResponseEntity<List<Bill>> findAll() {
         return ResponseEntity.ok(billService.findAll());
     }
 
     @GetMapping("/customer/{idCustomer}")
-    public ResponseEntity<List<Bill>> findAllByClient(@PathVariable("idCustomer") long id) throws SQLException {
+    public ResponseEntity<List<Bill>> findAllByClient(@PathVariable("idCustomer") long id) {
         return ResponseEntity.ok(billService.findAllByClient(id));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bill> findBillById(@PathVariable Long id) throws SQLException, ResponseStatusException {
+    public ResponseEntity<Bill> findBillById(@PathVariable Long id) {
         Bill bill = billService.findBillById(id);
         if (bill == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bill with id: '"+id+"' does not exist");
@@ -42,19 +42,19 @@ public class BillController {
     }
 
     @PostMapping
-    public ResponseEntity<Bill> create(@RequestBody Bill bill) throws SQLException {
+    public ResponseEntity<Bill> create(@RequestBody Bill bill) {
         billService.create(bill);
         return ResponseEntity.created(URI.create("/bill/"+bill.getIdNumber())).body(bill);
     }
 
     @PutMapping
-    public ResponseEntity<Bill> editBill(@RequestBody Bill bill) throws SQLException {
+    public ResponseEntity<Bill> editBill(@RequestBody Bill bill) {
         Bill edited = billService.editBill(bill);
         return ResponseEntity.ok(edited);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBill(@PathVariable Long id) throws SQLException {
+    public ResponseEntity<Void> deleteBill(@PathVariable Long id) {
         billService.deleteBill(id);
         return ResponseEntity.noContent().build();
     }

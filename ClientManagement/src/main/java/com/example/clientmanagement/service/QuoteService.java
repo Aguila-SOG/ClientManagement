@@ -26,11 +26,11 @@ public class QuoteService {
         return quoteDAO.findQuote(year);
     }
 
-    public Quote editQuote(Long id, Quote quote) {
-        return quoteDAO.editQuote(id, quote);
+    public Quote editQuote(Quote quote) {
+        return quoteDAO.editQuote(quote);
     }
 
-    public void deleteQuote(Long id) {
-        quoteDAO.deleteQuote(id);
+    public void deleteQuote(int year, int quarterly) {
+        quoteDAO.deleteQuote(year, quarterly);
     }
 }
