@@ -35,9 +35,6 @@ public class BillController {
     @GetMapping("/{id}")
     public ResponseEntity<Bill> findBillById(@PathVariable Long id) {
         Bill bill = billService.findBillById(id);
-        if (bill == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bill with id: '"+id+"' does not exist");
-        }
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 
