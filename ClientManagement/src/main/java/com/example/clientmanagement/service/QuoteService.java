@@ -4,6 +4,7 @@ import com.example.clientmanagement.entity.Quote;
 import com.example.clientmanagement.repository.QuoteDAO;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,4 +61,18 @@ public class QuoteService {
         return totalFactured - irpfRetained;
     }
 
+    public double totalYearlyAmmount(int year) {
+        double ammount = 0;
+        List<Quote> quotes = new ArrayList<>();
+        try {
+            quotes = quoteDAO.findQuote(year);
+            for (Quote quote : quotes) {
+                ammount += quote.getFacImport();
+            }
+            return ammount;
+        } catch (Exception e) {
+            System.out.println("No se han podido encontrar resultados" + e);
+            return 0;
+        }
+    }
 }
