@@ -4,7 +4,9 @@ import com.example.clientmanagement.repository.BillDAO;
 import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.entity.Customer;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;

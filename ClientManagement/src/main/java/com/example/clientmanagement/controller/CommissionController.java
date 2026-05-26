@@ -35,9 +35,7 @@ public class CommissionController {
     @GetMapping("/{id}")
     public ResponseEntity<Commission> findCommissionById(@PathVariable Long id) {
         Commission commission = commissionService.findCommission(id);
-        if (commission == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Commission with id: '"+id+"' does not exist");
-        }
+
         return new ResponseEntity<>(commission, HttpStatus.OK);
     }
 
