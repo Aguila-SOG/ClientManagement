@@ -53,39 +53,55 @@ public class BillService {
         billDAO.deleteBill(id);
     }
 
-    public double ammountGainedQuarterly(int startMonth, int endMonth, int year) {
+    public double ammountGainedQuarterly(int startMonth, int endMonth, int year, String currency) {
         try {
-            return billDAO.ammountGainedQuarterly(startMonth, endMonth, year);
-        } catch (NoResultException e) {
-            System.out.println("No se han encontrado facturas en esa fecha");
-            return 0;
+            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
+                return billDAO.ammountGainedQuarterly(startMonth, endMonth, year, currency);
+            } else {
+                return 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println("No se han encontrado facturas en esa fecha" + e);
+            return 0.0;
         }
     }
 
-    public double realAmmountGainedQuarterly(int startMonth, int endMonth, int year) {
+    public double realAmmountGainedQuarterly(int startMonth, int endMonth, int year, String currency) {
         try {
-            return (billDAO.ammountGainedQuarterly(startMonth, endMonth, year) * 0.80);
-        } catch (NoResultException e) {
-            System.out.println("No se han encontrado facturas en esa fecha");
-            return 0;
+            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
+                return (billDAO.ammountGainedQuarterly(startMonth, endMonth, year, currency) * 0.80);
+            } else {
+                return 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println("No se han encontrado facturas en esa fecha" + e);
+            return 0.0;
         }
     }
 
-    public double ammountGainedAnnually(int year) {
+    public double ammountGainedAnnually(int year, String currency) {
         try {
-            return billDAO.ammountGainedAnnually(year);
-        } catch (NoResultException e) {
-            System.out.println("No se han encontrado facturas en esa fecha");
-            return 0;
+            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
+                return billDAO.ammountGainedAnnually(year, currency);
+            } else {
+                return 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println("No se han encontrado facturas en esa fecha" + e);
+            return 0.0;
         }
     }
 
-    public double realAmmountGainedAnnually(int year) {
+    public double realAmmountGainedAnnually(int year, String currency) {
         try {
-            return (billDAO.ammountGainedAnnually(year) * 0.80);
-        } catch (NoResultException e) {
-            System.out.println("No se han encontrado facturas en esa fecha");
-            return 0;
+            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
+                return (billDAO.ammountGainedAnnually(year, currency) * 0.80);
+            } else {
+                return 0.0;
+            }
+        } catch (Exception e) {
+            System.out.println("No se han encontrado facturas en esa fecha" + e);
+            return 0.0;
         }
     }
 }
