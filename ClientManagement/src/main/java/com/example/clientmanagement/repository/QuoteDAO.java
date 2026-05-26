@@ -40,7 +40,7 @@ public class QuoteDAO {
     public void deleteQuote(int year, int quarterly) {
         entityManager.createQuery("DELETE FROM Quote WHERE quoteYear = :deleteYear AND quarterly = :deleteQuarterly")
                 .setParameter("deleteYear", year)
-                .setParameter("quarterly", quarterly)
+                .setParameter("deleteQuarterly", quarterly)
                 .executeUpdate();
     }
 }
