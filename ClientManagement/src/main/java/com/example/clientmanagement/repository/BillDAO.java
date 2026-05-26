@@ -46,4 +46,20 @@ public class BillDAO {
             entityManager.remove(bill);
         }
     }
+
+    public double ammountGainedQuarterly(int startMonth, int endMonth, int year) {
+        double ammount = entityManager.createQuery("SELECT SUM(priceEu) FROM Bill WHERE YEAR(billDate) = :selectedYear AND MONTH(billDate) BETWEEN :startMonth AND :endMonth", Double.class)
+                .setParameter("selectedYear", year)
+                .setParameter("startMonth", startMonth)
+                .setParameter("endMonth", endMonth)
+                .getSingleResult();
+        return ammount;
+    }
+
+    public double ammountGainedAnnually(int year) {
+        double ammount = entityManager.createQuery("SELECT SUM(priceEu) FROM Bill WHERE YEAR(billDate) = :selectedYear", Double.class)
+                .setParameter("selectedYear", year)
+                .getSingleResult();
+        return ammount;
+    }
 }

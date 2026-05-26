@@ -4,6 +4,7 @@ import com.example.clientmanagement.repository.BillDAO;
 import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.entity.Customer;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NoResultException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -50,5 +51,41 @@ public class BillService {
 
     public void deleteBill(Long id) {
         billDAO.deleteBill(id);
+    }
+
+    public double ammountGainedQuarterly(int startMonth, int endMonth, int year) {
+        try {
+            return billDAO.ammountGainedQuarterly(startMonth, endMonth, year);
+        } catch (NoResultException e) {
+            System.out.println("No se han encontrado facturas en esa fecha");
+            return 0;
+        }
+    }
+
+    public double realAmmountGainedQuarterly(int startMonth, int endMonth, int year) {
+        try {
+            return (billDAO.ammountGainedQuarterly(startMonth, endMonth, year) * 0.80);
+        } catch (NoResultException e) {
+            System.out.println("No se han encontrado facturas en esa fecha");
+            return 0;
+        }
+    }
+
+    public double ammountGainedAnnually(int year) {
+        try {
+            return billDAO.ammountGainedAnnually(year);
+        } catch (NoResultException e) {
+            System.out.println("No se han encontrado facturas en esa fecha");
+            return 0;
+        }
+    }
+
+    public double realAmmountGainedAnnually(int year) {
+        try {
+            return (billDAO.ammountGainedAnnually(year) * 0.80);
+        } catch (NoResultException e) {
+            System.out.println("No se han encontrado facturas en esa fecha");
+            return 0;
+        }
     }
 }
