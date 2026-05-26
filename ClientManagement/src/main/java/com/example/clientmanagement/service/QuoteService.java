@@ -35,7 +35,15 @@ public class QuoteService {
         quoteDAO.deleteQuote(year, quarterly);
     }
 
+    private final double EURO_TO_USD = 1.16;
+    private final double PAYPAL_VARIABLE_USD = 0.044;
+    private final double PAYPAL_FIXED_USD = 0.30;
+
     public double calcTotalFactured(int year, int month) {
+        return calcTotalFactured(year, month, "EUR");
+    }
+
+    public double calcTotalFactured(int year, int month, String mode) {
         List<Quote> yearlyQuotes = quoteDAO.findQuote(year);
         double total = 0.0;
 
@@ -47,21 +55,59 @@ public class QuoteService {
                 }
             }
         }
+
+        if ("USD".equalsIgnoreCase(mode)) {
+            return total * EURO_TO_USD;
+        } else if ("PAYPAL_USD".equalsIgnoreCase(mode)) {
+            double totalUsd = total * EURO_TO_USD;
+            return totalUsd - ((totalUsd * PAYPAL_VARIABLE_USD) + PAYPAL_FIXED_USD);
+        }
         return total;
     }
 
+
     public double calcIrpfRetained(int year, int month) {
-        double totalFactured = calcTotalFactured(year, month);
-        return totalFactured * 0.20;
+        return calcIrpfRetained(year, month, "EUR");
     }
+
+    public double calcIrpfRetained(int year, int month, String mode) {
+        double totalFactured = calcTotalFactured(year, month, "EUR");
+        double irpf = totalFactured * 0.20;
+
+        if ("USD".equalsIgnoreCase(mode)) {
+            return irpf * EURO_TO_USD;
+        } else if ("PAYPAL_USD".equalsIgnoreCase(mode)) {
+            double irpfUsd = irpf * EURO_TO_USD;
+            return irpfUsd - ((irpfUsd * PAYPAL_VARIABLE_USD) + PAYPAL_FIXED_USD);
+        }
+        return irpf;
+    }
+
 
     public double calcRealEarnings(int year, int month) {
-        double totalFactured = calcTotalFactured(year, month);
-        double irpfRetained = calcIrpfRetained(year, month);
-        return totalFactured - irpfRetained;
+        return calcRealEarnings(year, month, "EUR");
     }
 
+    public double calcRealEarnings(int year, int month, String mode) {
+        double totalFactured = calcTotalFactured(year, month, "EUR");
+        double irpfRetained = calcIrpfRetained(year, month, "EUR");
+        double earnings = totalFactured - irpfRetained;
+
+        if ("USD".equalsIgnoreCase(mode)) {
+            return earnings * EURO_TO_USD;
+        } else if ("PAYPAL_USD".equalsIgnoreCase(mode)) {
+            double earningsUsd = earnings * EURO_TO_USD;
+            return earningsUsd - ((earningsUsd * PAYPAL_VARIABLE_USD) + PAYPAL_FIXED_USD);
+        }
+        return earnings;
+    }
+
+
     public double totalYearlyAmmount(int year) {
+        return totalYearlyAmmount(year, "EUR");
+    }
+
+    public double totalYearlyAmmount(int year, String mode) {
         double ammount = 0;
         List<Quote> quotes = new ArrayList<>();
         try {
@@ -69,9 +115,17 @@ public class QuoteService {
             for (Quote quote : quotes) {
                 ammount += quote.getFacImport();
             }
+
+            if ("USD".equalsIgnoreCase(mode)) {
+                return ammount * EURO_TO_USD;
+            } else if ("PAYPAL_USD".equalsIgnoreCase(mode)) {
+                double ammountUsd = ammount * EURO_TO_USD;
+                return ammountUsd - ((ammountUsd * PAYPAL_VARIABLE_USD) + PAYPAL_FIXED_USD);
+            }
             return ammount;
+
         } catch (Exception e) {
-            System.out.println("No se han podido encontrar resultados" + e);
+            System.out.println("No se han podido encontrar resultados " + e);
             return 0;
         }
     }
