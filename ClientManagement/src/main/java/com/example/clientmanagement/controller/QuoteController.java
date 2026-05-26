@@ -39,4 +39,35 @@ public class QuoteController {
     public void deleteQuote(@PathVariable int year, @PathVariable int quarterly) {
         quoteService.deleteQuote(year, quarterly);
     }
+
+    @GetMapping("/total")
+    public double calcTotalFactured(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcTotalFactured(year, month, mode);
+    }
+
+    @GetMapping("/irpf")
+    public double calcIrpfRetained(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcIrpfRetained(year, month, mode);
+    }
+
+    @GetMapping("/earnings")
+    public double calcRealEarnings(
+            @RequestParam int year,
+            @RequestParam int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcRealEarnings(year, month, mode);
+    }
+
+    @GetMapping("/yearly")
+    public double totalYearlyAmmount(
+            @RequestParam int year,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.totalYearlyAmmount(year, mode);
+    }
 }
