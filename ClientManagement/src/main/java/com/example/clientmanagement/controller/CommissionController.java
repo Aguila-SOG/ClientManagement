@@ -1,15 +1,12 @@
 package com.example.clientmanagement.controller;
 
-import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.entity.Commission;
 import com.example.clientmanagement.service.CommissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.List;
 @CrossOrigin(origins="*")
 @RestController

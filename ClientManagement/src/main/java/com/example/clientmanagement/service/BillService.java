@@ -2,12 +2,9 @@ package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.repository.BillDAO;
 import com.example.clientmanagement.entity.Bill;
-import com.example.clientmanagement.entity.Customer;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
