@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idNumber")
+    @Column(name = "id_number")
     private Long idNumber;
 
     @Column(length = 50, nullable = false)
@@ -34,7 +34,7 @@ public class Bill {
     private double priceUs;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     public Bill(Long idNumber, String facturaType, double pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
@@ -65,16 +65,16 @@ public class Bill {
         return facturaType;
     }
 
-    public void setFacturaType(String facturaType) {
-        this.facturaType = facturaType;
+    public void setFacturaType(String factura_type) {
+        this.facturaType = factura_type;
     }
 
     public double getPricePaypal() {
         return pricePaypal;
     }
 
-    public void setPricePaypal(double pricePaypal) {
-        this.pricePaypal = pricePaypal;
+    public void setPricePaypal(double price_Paypal) {
+        this.pricePaypal = price_Paypal;
     }
 
     public String getTitle() {
