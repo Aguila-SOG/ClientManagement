@@ -1,6 +1,7 @@
 package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.entity.Management;
+import com.example.clientmanagement.entity.ManagementId; // <-- Importamos la nueva clave compuesta
 import com.example.clientmanagement.repository.ManagementDAO;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -34,23 +35,26 @@ public class ManagementService {
     }
 
     public Management findManagement(int year, int quarterly) {
-        Management record = managementDAO.findByFacYearAndQuarterly(year, quarterly);
-        if (record == null) {
-            throw new RuntimeException("Management record not found");
-        }
-        return record;
+        return managementDAO.findById(new ManagementId(year, quarterly))
+                .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
     public Management editManagement(int year, int quarterly, Management management) {
         Management existing = findManagement(year, quarterly);
-        existing.setTaxPayment(management.getTaxPayment());
-        existing.setPerformance(management.getPerformance());
+
+        if (management.getTaxPayment() != null) {
+            existing.setTaxPayment(management.getTaxPayment());
+        }
+        if (management.getPerformance() != null) {
+            existing.setPerformance(management.getPerformance());
+        }
+
         return managementDAO.save(existing);
     }
 
     public void deleteManagement(int year, int quarterly) {
-        Management existing = findManagement(year, quarterly);
-        managementDAO.delete(existing);
+        findManagement(year, quarterly);
+        managementDAO.deleteById(new ManagementId(year, quarterly));
     }
 
     private int calculateQuarter(){
