@@ -43,8 +43,8 @@ public class CustormerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(customerService.editCustomer(customer));
     }
 
-    @DeleteMapping("/delete")
-    public void deleteCustomer(@RequestParam Long id){
+    @DeleteMapping("/delete/{id}")
+    public void deleteCustomer(@PathVariable Long id){
         try {
             customerService.deleteCustomer(id);
         } catch (Exception e) {

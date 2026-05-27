@@ -21,7 +21,7 @@ public class Bill {
     @Column(length = 150, nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "isMade")
     private boolean isMade;
 
     @Column(nullable = false)
