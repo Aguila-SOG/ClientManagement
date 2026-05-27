@@ -12,13 +12,13 @@ public class Bill {
     @Column(name = "id_number")
     private Long idNumber;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 50, nullable = false)
     private String facturaType;
 
-    @Column(length = 25, nullable = false)
+    @Column(nullable = false)
     private double pricePaypal;
 
-    @Column(length = 25, nullable = false)
+    @Column(length = 150, nullable = false)
     private String title;
 
     @Column(nullable = false)
@@ -85,11 +85,11 @@ public class Bill {
         this.title = title;
     }
 
-    public boolean isIs_made() {
+    public boolean isMade() {
         return isMade;
     }
 
-    public void setIs_made(boolean isMade) {
+    public void setIsMade(boolean isMade) {
         this.isMade = isMade;
     }
 
@@ -97,7 +97,7 @@ public class Bill {
         return billDate;
     }
 
-    public void setBill_date(LocalDate billDate) {
+    public void setBillDate(LocalDate billDate) {
         this.billDate = billDate;
     }
 

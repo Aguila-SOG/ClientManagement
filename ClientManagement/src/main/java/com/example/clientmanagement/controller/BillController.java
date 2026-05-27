@@ -22,7 +22,7 @@ public class BillController {
         this.billService = billService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Bill>> findAll() {
         return ResponseEntity.ok(billService.findAll());
     }
@@ -32,25 +32,25 @@ public class BillController {
         return ResponseEntity.ok(billService.findAllByClient(id));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<Bill> findBillById(@PathVariable Long id) {
         Bill bill = billService.findBillById(id);
         return new ResponseEntity<>(bill, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Bill> create(@RequestBody Bill bill) {
         billService.create(bill);
         return ResponseEntity.created(URI.create("/bill/"+bill.getIdNumber())).body(bill);
     }
 
-    @PutMapping
+    @PutMapping("/edit")
     public ResponseEntity<Bill> editBill(@RequestBody Bill bill) {
         Bill edited = billService.editBill(bill);
         return ResponseEntity.ok(edited);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteBill(@PathVariable Long id) {
         billService.deleteBill(id);
         return ResponseEntity.noContent().build();
