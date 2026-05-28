@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "management")
-@IdClass(ManagementId.class)
 public class Management {
 
     @Id
@@ -28,6 +27,9 @@ public class Management {
         this.quarterly = quarterly;
         this.taxPayment = taxPayment;
         this.performance = performance;
+    }
+
+    public Management(int year, int quarterly) {
     }
 
     public Integer getFacYear() { return facYear; }

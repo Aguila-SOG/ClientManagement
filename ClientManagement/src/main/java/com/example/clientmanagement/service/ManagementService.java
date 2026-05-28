@@ -1,7 +1,6 @@
 package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.entity.Management;
-import com.example.clientmanagement.entity.ManagementId;
 import com.example.clientmanagement.repository.ManagementDAO;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -24,7 +23,7 @@ public class ManagementService {
     }
 
     public Management findById(int year, int quarterly) {
-        return managementDAO.findById(new ManagementId(year, quarterly))
+        return managementDAO.findById(new Management(year, quarterly))
                 .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
@@ -37,6 +36,6 @@ public class ManagementService {
 
     public void deleteManagement(int year, int quarterly) {
         findById(year, quarterly);
-        managementDAO.deleteById(new ManagementId(year, quarterly));
+        managementDAO.deleteById(new Management(year, quarterly));
     }
 }
