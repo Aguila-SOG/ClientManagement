@@ -1,12 +1,9 @@
 package com.example.clientmanagement.service;
 
-import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.entity.Commission;
 import com.example.clientmanagement.repository.CommissionDAO;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class CommissionService {
         return commissionDAO.findAllByClient(customerId);
     }
 
-    public Commission findCommission(Long id) {
+    public Commission findCommissionById(Long id) {
         Commission commission = commissionDAO.findCommissionById(id);
         if (commission == null) {
             throw new EntityNotFoundException("The commission with id: '"+id+"' does not exist");

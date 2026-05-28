@@ -2,14 +2,12 @@ package com.example.clientmanagement.controller;
 
 import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.service.BillService;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.List;
 @CrossOrigin(origins="*")
 @RestController
@@ -34,14 +32,22 @@ public class BillController {
 
     @GetMapping("/search/{id}")
     public ResponseEntity<Bill> findBillById(@PathVariable Long id) {
-        Bill bill = billService.findBillById(id);
-        return new ResponseEntity<>(bill, HttpStatus.OK);
+        try {
+            Bill bill = billService.findBillById(id);
+            return new ResponseEntity<>(bill, HttpStatus.OK);
+        } catch (EntityNotFoundException exceptionIdNotFound) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/create")
     public ResponseEntity<Bill> create(@RequestBody Bill bill) {
-        billService.create(bill);
-        return ResponseEntity.created(URI.create("/bill/"+bill.getIdNumber())).body(bill);
+        try {
+            billService.create(bill);
+            return ResponseEntity.created(URI.create("/bill/"+bill.getIdNumber())).body(bill);
+        } catch (IllegalArgumentException exceptionIllegalParameter) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/edit")

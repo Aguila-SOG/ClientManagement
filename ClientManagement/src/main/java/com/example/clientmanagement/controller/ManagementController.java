@@ -24,13 +24,21 @@ public class ManagementController {
 
     @GetMapping("/{facYear}/{quarterly}")
     public Management findById(@PathVariable int facYear, @PathVariable int quarterly) {
-        return managementService.findById(facYear, quarterly);
+        try {
+            return managementService.findById(facYear, quarterly);
+        } catch (RuntimeException exceptionNotFound) {
+            return null;
+        }
     }
 
     @PostMapping("/create")
     public Management create(@RequestBody Management management) {
-        managementService.createManagement(management);
-        return management;
+        try {
+            managementService.createManagement(management);
+            return management;
+        } catch (IllegalArgumentException exceptionDataNotFound) {
+            return null;
+        }
     }
 
     @PutMapping("/edit/{facYear}/{quarterly}")

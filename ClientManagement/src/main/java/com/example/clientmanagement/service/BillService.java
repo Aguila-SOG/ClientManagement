@@ -2,12 +2,10 @@ package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.repository.BillDAO;
 import com.example.clientmanagement.entity.Bill;
-import com.example.clientmanagement.entity.Customer;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NoResultException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -60,8 +58,8 @@ public class BillService {
             } else {
                 return 0.0;
             }
-        } catch (Exception e) {
-            System.out.println("No se han encontrado facturas en esa fecha" + e);
+        } catch (DataAccessException exceptionDBCommunication) {
+            System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
         }
     }
@@ -73,8 +71,8 @@ public class BillService {
             } else {
                 return 0.0;
             }
-        } catch (Exception e) {
-            System.out.println("No se han encontrado facturas en esa fecha" + e);
+        } catch (DataAccessException exceptionDBCommunication) {
+            System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
         }
     }
@@ -86,8 +84,8 @@ public class BillService {
             } else {
                 return 0.0;
             }
-        } catch (Exception e) {
-            System.out.println("No se han encontrado facturas en esa fecha" + e);
+        } catch (DataAccessException exceptionDBCommunication) {
+            System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
         }
     }
@@ -99,8 +97,8 @@ public class BillService {
             } else {
                 return 0.0;
             }
-        } catch (Exception e) {
-            System.out.println("No se han encontrado facturas en esa fecha" + e);
+        } catch (DataAccessException exceptionDBCommunication) {
+            System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
         }
     }

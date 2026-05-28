@@ -5,7 +5,6 @@ import com.example.clientmanagement.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 @CrossOrigin(origins="*")
@@ -31,11 +30,7 @@ public class CustormerController {
 
     @GetMapping("/search/{nick}")
     public List<Customer> findCustomer(@PathVariable String nick){
-        try {
-            return customerService.findCustomer(nick);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return customerService.findCustomer(nick);
     }
 
     @PutMapping("/edit")
@@ -45,10 +40,6 @@ public class CustormerController {
 
     @DeleteMapping("/delete/{id}")
     public void deleteCustomer(@PathVariable Long id){
-        try {
-            customerService.deleteCustomer(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        customerService.deleteCustomer(id);
     }
 }

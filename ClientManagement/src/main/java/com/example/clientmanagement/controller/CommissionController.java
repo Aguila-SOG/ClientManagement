@@ -1,15 +1,13 @@
 package com.example.clientmanagement.controller;
 
-import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.entity.Commission;
 import com.example.clientmanagement.service.CommissionService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
-import java.sql.SQLException;
 import java.util.List;
 @CrossOrigin(origins="*")
 @RestController
@@ -34,15 +32,22 @@ public class CommissionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Commission> findCommissionById(@PathVariable Long id) {
-        Commission commission = commissionService.findCommission(id);
-
-        return new ResponseEntity<>(commission, HttpStatus.OK);
+        try {
+            Commission commission = commissionService.findCommissionById(id);
+            return new ResponseEntity<>(commission, HttpStatus.OK);
+        } catch (EntityNotFoundException exceptionIdNotFound) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
     public ResponseEntity<Commission> create(@RequestBody Commission commission) {
-        commissionService.create(commission);
-        return ResponseEntity.created(URI.create("/commission/"+commission.getId())).body(commission);
+        try {
+            commissionService.create(commission);
+            return ResponseEntity.created(URI.create("/commission/"+commission.getId())).body(commission);
+        } catch (IllegalArgumentException exceptionIllegalParameter) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping

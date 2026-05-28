@@ -2,6 +2,7 @@ package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.entity.Quote;
 import com.example.clientmanagement.repository.QuoteDAO;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -124,8 +125,8 @@ public class QuoteService {
             }
             return ammount;
 
-        } catch (Exception e) {
-            System.out.println("No se han podido encontrar resultados " + e);
+        } catch (DataAccessException exceptionDBCommunication) {
+            System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0;
         }
     }
