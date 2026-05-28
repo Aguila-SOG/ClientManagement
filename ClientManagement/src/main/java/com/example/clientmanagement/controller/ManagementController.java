@@ -24,7 +24,7 @@ public class ManagementController {
 
     @GetMapping("/{facYear}/{quarterly}")
     public Management findById(@PathVariable int facYear, @PathVariable int quarterly) {
-        return managementService.findManagement(facYear, quarterly);
+        return managementService.findById(facYear, quarterly);
     }
 
     @PostMapping("/create")

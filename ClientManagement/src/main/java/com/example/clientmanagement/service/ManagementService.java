@@ -1,9 +1,9 @@
 package com.example.clientmanagement.service;
 
 import com.example.clientmanagement.entity.Management;
+import com.example.clientmanagement.entity.ManagementId;
 import com.example.clientmanagement.repository.ManagementDAO;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
@@ -20,37 +20,23 @@ public class ManagementService {
     }
 
     public void createManagement(Management management){
-        if (management.getFacYear() == null){
-            throw new IllegalArgumentException("Fac_year is required");
-        }
-        if (management.getQuarterly() == null){
-            throw new IllegalArgumentException("Quarterly is required");
-        }
-        if (management.getTaxPayment() == null){
-            throw new IllegalArgumentException("Tax payment is required");
-        }
-        if (management.getPerformance() == null){
-            throw new IllegalArgumentException("Performance is required");
-        }
         managementDAO.save(management);
     }
 
-    public Management findManagement(int year, int quarterly) {
-        Management record = managementDAO.findByFacYearAndQuarterly(year, quarterly);
-        if (record == null) {
-            throw new RuntimeException("Management record not found");
-        }
-        return record;
+    public Management findById(int year, int quarterly) {
+        return managementDAO.findById(new ManagementId(year, quarterly))
+                .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
-    @Transactional
     public Management editManagement(int year, int quarterly, Management management) {
-        managementDAO.updateByFacYearAndQuarterly(year, quarterly, management.getTaxPayment(), management.getPerformance());
-        return findManagement(year, quarterly);
+        Management existing = findById(year, quarterly);
+        existing.setTaxPayment(management.getTaxPayment());
+        existing.setPerformance(management.getPerformance());
+        return managementDAO.save(existing);
     }
 
     public void deleteManagement(int year, int quarterly) {
-        Management existing = findManagement(year, quarterly);
-        managementDAO.delete(existing);
+        findById(year, quarterly);
+        managementDAO.deleteById(new ManagementId(year, quarterly));
     }
 }
