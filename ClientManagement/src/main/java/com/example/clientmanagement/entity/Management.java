@@ -2,17 +2,14 @@ package com.example.clientmanagement.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "management")
 public class Management {
 
-    @Id
-    @Column(length = 4)
-    private Integer facYear;
-
-    @Id
-    @Column(length = 1)
-    private Integer quarterly;
+    @EmbeddedId
+    private Id id;
 
     @Column(nullable = false)
     private Double taxPayment;
@@ -20,23 +17,37 @@ public class Management {
     @Column(nullable = false)
     private Double performance;
 
+    @Embeddable
+    public static class Id implements Serializable {
+        @Column(length = 4, nullable = false)
+        private Integer facYear;
+
+        @Column(length = 1, nullable = false)
+        private Integer quarterly;
+
+        public Id() {
+
+        }
+
+        public Id(Integer facYear, Integer quarterly) {
+            this.facYear = facYear;
+            this.quarterly = quarterly;
+        }
+    }
+
     public Management() {}
 
     public Management(Integer facYear, Integer quarterly, Double taxPayment, Double performance) {
-        this.facYear = facYear;
-        this.quarterly = quarterly;
+        this.id = new Id(facYear, quarterly);
         this.taxPayment = taxPayment;
         this.performance = performance;
     }
 
-    public Management(int year, int quarterly) {
-    }
+    public Integer getFacYear() { return id.facYear; }
+    public void setFacYear(Integer facYear) { id.facYear = facYear; }
 
-    public Integer getFacYear() { return facYear; }
-    public void setFacYear(Integer facYear) { this.facYear = facYear; }
-
-    public Integer getQuarterly() { return quarterly; }
-    public void setQuarterly(Integer quarterly) { this.quarterly = quarterly; }
+    public Integer getQuarterly() { return id.quarterly; }
+    public void setQuarterly(Integer quarterly) { id.quarterly = quarterly; }
 
     public Double getTaxPayment() { return taxPayment; }
     public void setTaxPayment(Double taxPayment) { this.taxPayment = taxPayment; }

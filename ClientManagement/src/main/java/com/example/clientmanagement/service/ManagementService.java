@@ -23,7 +23,7 @@ public class ManagementService {
     }
 
     public Management findById(int year, int quarterly) {
-        return managementDAO.findById(new Management(year, quarterly))
+        return managementDAO.findById(new Management.Id(year, quarterly))
                 .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
@@ -36,6 +36,6 @@ public class ManagementService {
 
     public void deleteManagement(int year, int quarterly) {
         findById(year, quarterly);
-        managementDAO.deleteById(new Management(year, quarterly));
+        managementDAO.deleteById(new Management.Id(year, quarterly));
     }
 }
