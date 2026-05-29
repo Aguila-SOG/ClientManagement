@@ -63,30 +63,34 @@ public class BillController {
     }
 
     @GetMapping("/quarterly")
-    public ResponseEntity<Double> ammountGainedQuarterly(@RequestParam int startMonth,
-                                                         @RequestParam int endMonth,
-                                                         @RequestParam int year,
-                                                         @RequestParam(defaultValue = "PriceEu") String currency) {
+    public ResponseEntity<Double> ammountGainedQuarterly(
+            @RequestParam int startMonth,
+            @RequestParam int endMonth,
+            @RequestParam int year,
+            @RequestParam(defaultValue = "priceEu") String currency) {
         return ResponseEntity.ok(billService.ammountGainedQuarterly(startMonth, endMonth, year, currency));
     }
 
     @GetMapping("/quarterlyReal")
-    public ResponseEntity<Double> realAmmountGainedQuarterly(@RequestParam int startMonth,
-                                                             @RequestParam int endMonth,
-                                                             @RequestParam int year,
-                                                             @RequestParam(defaultValue = "PriceEu") String currency) {
+    public ResponseEntity<Double> realAmmountGainedQuarterly(
+            @RequestParam int startMonth,
+            @RequestParam int endMonth,
+            @RequestParam int year,
+            @RequestParam(defaultValue = "priceEu") String currency) {
         return ResponseEntity.ok(billService.realAmmountGainedQuarterly(startMonth, endMonth, year, currency));
     }
 
     @GetMapping("/annually")
-    public ResponseEntity<Double> ammountGainedAnnually(@RequestParam int year,
-                                                        @RequestParam(defaultValue = "PriceEu") String currency) {
+    public ResponseEntity<Double> ammountGainedAnnually(
+            @RequestParam int year,
+            @RequestParam(defaultValue = "priceEu") String currency) {
         return ResponseEntity.ok(billService.ammountGainedAnnually(year, currency));
     }
 
     @GetMapping("/annuallyReal")
-    public ResponseEntity<Double> realAmmountGainedAnnually(@RequestParam int year,
-                                                            @RequestParam(defaultValue = "PriceEu") String currency) {
+    public ResponseEntity<Double> realAmmountGainedAnnually(
+            @RequestParam int year,
+            @RequestParam(defaultValue = "priceEu") String currency) {
         return ResponseEntity.ok(billService.realAmmountGainedAnnually(year, currency));
     }
 }
