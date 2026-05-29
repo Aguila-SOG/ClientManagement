@@ -21,15 +21,11 @@ public class CommissionService {
     }
 
     public List<Commission> findAllByClient(Long customerId) {
-        return commissionDAO.findAllByClient(customerId);
+        return commissionDAO.findByCustomerId(customerId);
     }
 
     public Commission findCommissionById(Long id) {
-        Commission commission = commissionDAO.findCommissionById(id);
-        if (commission == null) {
-            throw new EntityNotFoundException("The commission with id: '"+id+"' does not exist");
-        }
-        return commission;
+        return commissionDAO.findById(id).orElseThrow(() -> new EntityNotFoundException("The bill with the id: '"+id+"' does not exist"));
     }
 
     public Commission create(Commission commission) {
@@ -39,14 +35,14 @@ public class CommissionService {
         if (commission.getCustomer() == null || commission.getCustomer().getId() == null) {
             throw new IllegalArgumentException("The commission must be associated with a customer");
         }
-        return commissionDAO.create(commission);
+        return commissionDAO.save(commission);
     }
 
     public Commission editCommission(Commission commission) {
-        return commissionDAO.editCommission(commission);
+        return commissionDAO.save(commission);
     }
 
     public void deleteCommission(Long id) {
-        commissionDAO.deleteCommission(id);
+        commissionDAO.deleteById(id);
     }
 }

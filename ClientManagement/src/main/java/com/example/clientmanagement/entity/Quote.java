@@ -2,18 +2,15 @@ package com.example.clientmanagement.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "quote")
 public class Quote {
-    @Id
-    @Column(length = 4)
-    private Integer quoteYear;
 
-    @Id
-    @Column(length = 1)
-    private Integer quarterly;
+    @EmbeddedId
+    private Id id = new Id();
 
     @Column(nullable = false)
     private double facImport;
@@ -21,28 +18,43 @@ public class Quote {
     @Column
     private Date datePay;
 
-    public Quote(Integer year, Integer quarterly, double facImport) {
-        this.quoteYear = year;
-        this.quarterly = quarterly;
+    @Embeddable
+    public static class Id implements Serializable {
+        @Column(length = 4)
+        private Integer quoteYear;
+
+        @Column(length = 1)
+        private Integer quarterly;
+
+        public Id() {
+
+        }
+        public Id(Integer quoteYear, Integer quarterly) {
+            this.quoteYear = quoteYear;
+            this.quarterly = quarterly;
+        }
+    }
+
+    public Quote(double facImport) {
         this.facImport = facImport;
     }
 
     public Quote(){}
 
     public Integer getQuoteYear() {
-        return quoteYear;
+        return id.quoteYear;
     }
 
     public void setQuoteYear(Integer year) {
-        this.quoteYear = year;
+        this.id.quoteYear = year;
     }
 
     public Integer getQuarterly() {
-        return quarterly;
+        return id.quarterly;
     }
 
     public void setQuarterly(Integer quarterly) {
-        this.quarterly = quarterly;
+        this.id.quarterly = quarterly;
     }
 
     public double getFacImport() {

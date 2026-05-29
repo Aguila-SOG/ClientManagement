@@ -1,7 +1,7 @@
 package com.example.clientmanagement.service;
 
-import com.example.clientmanagement.repository.BillDAO;
 import com.example.clientmanagement.entity.Bill;
+import com.example.clientmanagement.repository.BillDAO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -18,19 +18,16 @@ public class BillService {
     }
 
     public List<Bill> findAll() {
+
         return billDAO.findAll();
     }
 
     public List<Bill> findAllByClient(Long id) {
-        return billDAO.findAllByClient(id);
+        return billDAO.findByCustomerId(id);
     }
 
     public Bill findBillById(Long id) {
-        Bill bill = billDAO.findBill(id);
-        if (bill == null) {
-            throw new EntityNotFoundException("The bill with the id: '"+id+"' does not exist");
-        }
-        return bill;
+        return billDAO.findById(id).orElseThrow(() -> new EntityNotFoundException("The bill with the id: '"+id+"' does not exist"));
     }
 
     public Bill create(Bill bill) {
@@ -40,24 +37,35 @@ public class BillService {
         if (bill.getCustomer() == null || bill.getCustomer().getId() == null) {
             throw new IllegalArgumentException("The bill must be associated with a customer");
         }
-        return billDAO.create(bill);
+        return billDAO.save(bill);
     }
 
     public Bill editBill(Bill bill) {
-        return billDAO.editBill(bill);
+        try {
+            Bill existing = findBillById(bill.getIdNumber());
+            existing.setBillDate(bill.getBillDate());
+            existing.setCustomer(bill.getCustomer());
+            existing.setFacturaType(bill.getFacturaType());
+            existing.setIsMade(bill.isMade());
+            existing.setPricePaypal(bill.getPricePaypal());
+            existing.setPriceEu(bill.getPriceEu());
+            existing.setPriceUs(bill.getPriceUs());
+            return billDAO.save(existing);
+        } catch (DataAccessException errorConnecting) {
+            System.out.println("Error while trying to connect to the database");
+            return null;
+        }
     }
 
     public void deleteBill(Long id) {
-        billDAO.deleteBill(id);
+        billDAO.deleteById(id);
     }
 
     public double ammountGainedQuarterly(int startMonth, int endMonth, int year, String currency) {
+        Double ammount = 0.0;
         try {
-            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
-                return billDAO.ammountGainedQuarterly(startMonth, endMonth, year, currency);
-            } else {
-                return 0.0;
-            }
+            List<Bill> bills = billDAO.findSpecificMonths(startMonth, endMonth, year);
+            return calculateSum(bills, currency);
         } catch (DataAccessException exceptionDBCommunication) {
             System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
@@ -65,12 +73,10 @@ public class BillService {
     }
 
     public double realAmmountGainedQuarterly(int startMonth, int endMonth, int year, String currency) {
+        Double ammount = 0.0;
         try {
-            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
-                return (billDAO.ammountGainedQuarterly(startMonth, endMonth, year, currency) * 0.80);
-            } else {
-                return 0.0;
-            }
+            List<Bill> bills = billDAO.findSpecificMonths(startMonth, endMonth, year);
+            return (calculateSum(bills, currency) * 0.80);
         } catch (DataAccessException exceptionDBCommunication) {
             System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
@@ -78,12 +84,10 @@ public class BillService {
     }
 
     public double ammountGainedAnnually(int year, String currency) {
+        Double ammount = 0.0;
         try {
-            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
-                return billDAO.ammountGainedAnnually(year, currency);
-            } else {
-                return 0.0;
-            }
+            List<Bill> bills = billDAO.findSpecificMonthsYearly(year);
+            return calculateSum(bills, currency);
         } catch (DataAccessException exceptionDBCommunication) {
             System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
@@ -91,15 +95,27 @@ public class BillService {
     }
 
     public double realAmmountGainedAnnually(int year, String currency) {
+        Double ammount = 0.0;
         try {
-            if (currency.equals("priceEu") || currency.equals("priceUs") || currency.equals("pricePaypal")) {
-                return (billDAO.ammountGainedAnnually(year, currency) * 0.80);
-            } else {
-                return 0.0;
-            }
+            List<Bill> bills = billDAO.findSpecificMonthsYearly(year);
+            return (calculateSum(bills, currency) * 0.80);
         } catch (DataAccessException exceptionDBCommunication) {
             System.out.println("Error while trying to communicate with the database: " + exceptionDBCommunication);
             return 0.0;
         }
+    }
+
+    public double calculateSum(List<Bill> bills, String currency) {
+        Double ammount = 0.0;
+        for (Bill bill : bills) {
+            if (currency.equals("priceEu")) {
+                ammount += bill.getPriceEu();
+            } else if (currency.equals("priceUs")) {
+                ammount += bill.getPriceUs();
+            } else if (currency.equals("pricePaypal")) {
+                ammount += bill.getPricePaypal();
+            }
+        }
+        return ammount;
     }
 }

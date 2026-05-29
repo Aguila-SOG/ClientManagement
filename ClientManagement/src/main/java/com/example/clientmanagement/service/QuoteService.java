@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class QuoteService {
+
     private final QuoteDAO quoteDAO;
 
     public QuoteService(QuoteDAO quoteDAO) {
@@ -21,19 +22,19 @@ public class QuoteService {
     }
 
     public Quote create(Quote quote) {
-        return quoteDAO.create(quote);
+        return quoteDAO.save(quote);
     }
 
     public List<Quote> findQuote(int year) {
-        return quoteDAO.findQuote(year);
+        return quoteDAO.findByIdQuoteYear(year);
     }
 
     public Quote editQuote(Quote quote) {
-        return quoteDAO.editQuote(quote);
+        return quoteDAO.save(quote);
     }
 
     public void deleteQuote(int year, int quarterly) {
-        quoteDAO.deleteQuote(year, quarterly);
+        quoteDAO.deleteById(new Quote.Id(year, quarterly));
     }
 
     private final double EURO_TO_USD = 1.16;
@@ -45,7 +46,7 @@ public class QuoteService {
     }
 
     public double calcTotalFactured(int year, int month, String mode) {
-        List<Quote> yearlyQuotes = quoteDAO.findQuote(year);
+        List<Quote> yearlyQuotes = quoteDAO.findByIdQuoteYear(year);
         double total = 0.0;
 
         for (Quote quote : yearlyQuotes) {
@@ -112,7 +113,7 @@ public class QuoteService {
         double ammount = 0;
         List<Quote> quotes = new ArrayList<>();
         try {
-            quotes = quoteDAO.findQuote(year);
+            quotes = quoteDAO.findByIdQuoteYear(year);
             for (Quote quote : quotes) {
                 ammount += quote.getFacImport();
             }

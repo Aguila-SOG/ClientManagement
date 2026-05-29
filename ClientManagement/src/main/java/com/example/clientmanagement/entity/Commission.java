@@ -17,11 +17,11 @@ public class Commission {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customerId", nullable = false)
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "id_number", nullable = false)
+    @JoinColumn(name = "idNumber", nullable = false)
     private Bill bill;
 
     public Commission(Long id, String name, String description) {
