@@ -1,18 +1,25 @@
 # ClientManagement
 
+Este proyecto consiste en un sistema de gestión integral estructurado en una arquitectura cliente-servidor, compuesto por un backend desarrollado en Spring Boot (API REST) y un frontend web interactivo para la administración del sistema.
+
 ## 1. Repositorios empleados
 
-  - [WEB](https://github.com/Guigarmon3/Web_Practicas.git)
-  - [Springboot](https://github.com/Aguila-SOG/ClientManagement.git)
+- **Frontend Web:** [WEB](https://github.com/Guigarmon3/Web_Practicas.git)
+- **Backend (API REST):** [Spring Boot](https://github.com/Aguila-SOG/ClientManagement.git)
 
-## 2. Entornos requeridos
+## 2. Entornos y Herramientas Requeridos
 
-  - MySQLWorkbench para crear la base de datos
-  - Intelij IDEA
-  - Visual Studio Code
-  
-## 3. Anotaciones
+- **Java JDK 26**
+- **MySQL / MySQL Workbench** (para la persistencia de datos).
+- **IntelliJ IDEA** (entorno recomendado para ejecutar el Backend).
+- **Visual Studio Code** (entorno recomendado para desplegar la Web).
 
-- En MySQLWorkbench hay que crear la base de datos `CREATE DATABASE IF NOT EXISTS CustomerManagement`
-- En Visual Studio Code es necesaria la extensión *Live Server* y *Live Preview*
-- En InteliJ IDEA hay que ejecutar el SpringBoot y  será necesario confgurar el **aplication.properties** del proyecto
+
+
+## 3. Instrucciones de Instalación y Ejecución
+
+### 3.1. Base de Datos (MySQL)
+1. Abre MySQL Workbench o tu terminal de base de datos.
+2. Crea la base de datos del proyecto ejecutando el siguiente comando:
+   ```sql
+   CREATE DATABASE IF NOT EXISTS ClientManagement;
