@@ -10,10 +10,10 @@ import java.util.List;
 @CrossOrigin(origins="*")
 @RestController
 @RequestMapping("/customers")
-public class CustormerController {
+public class CustomerController {
     private final CustomerService customerService;
 
-    public CustormerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
 

@@ -26,6 +26,10 @@ public class BillService {
         return billDAO.findByCustomerId(id);
     }
 
+    public List<Bill> findByCustomerIsNull() {
+        return billDAO.findByCustomerIsNull();
+    }
+
     public Bill findBillById(Long id) {
         return billDAO.findById(id).orElseThrow(() -> new EntityNotFoundException("The bill with the id: '"+id+"' does not exist"));
     }

@@ -30,6 +30,11 @@ public class BillController {
         return ResponseEntity.ok(billService.findAllByClient(id));
     }
 
+    @GetMapping("/idnull")
+    public ResponseEntity<List<Bill>> findByCustomerIsNull() {
+        return ResponseEntity.ok(billService.findByCustomerIsNull());
+    }
+
     @GetMapping("/search/{id}")
     public ResponseEntity<Bill> findBillById(@PathVariable Long id) {
         try {
