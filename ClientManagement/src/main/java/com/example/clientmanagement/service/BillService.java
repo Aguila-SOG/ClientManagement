@@ -4,8 +4,10 @@ import com.example.clientmanagement.entity.Bill;
 import com.example.clientmanagement.repository.BillDAO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -18,15 +20,18 @@ public class BillService {
     }
 
     public List<Bill> findAll() {
-
-        return billDAO.findAll();
+        return billDAO.findAll(Sort.by(Sort.Direction.ASC, "billDate"));
     }
 
     public List<Bill> findAllByClient(Long id) {
-        return billDAO.findByCustomerId(id);
+        List<Bill> bills = billDAO.findByCustomerId(id);
+        bills.sort(Comparator.comparing(Bill::getBillDate));
+        return bills;
     }
 
     public List<Bill> findByCustomerIsNull() {
+        List<Bill> bills = billDAO.findByCustomerIsNull();
+        bills.sort(Comparator.comparing(Bill::getBillDate));
         return billDAO.findByCustomerIsNull();
     }
 

@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -24,9 +25,11 @@ public class CustomerService {
         this.commissionDAO = commissionDAO;
     }
 
-    public List<Customer> findAll(){
+    public List<Customer> findAll() {
         try {
-            return customerDAO.findAll();
+            List<Customer> customers = customerDAO.findAll();
+            customers.sort(Comparator.comparing(Customer::getId).reversed());
+            return customers;
         } catch (DataAccessException errorConnecting) {
             System.out.println("Error while trying to connect to the database");
             return new ArrayList<>();
@@ -48,10 +51,12 @@ public class CustomerService {
 
     public List<Customer> findCustomerByNick(String nick){
         try {
+            List<Customer> customers = customerDAO.findByNickContaining(nick);
+            customers.sort(Comparator.comparing(Customer::getId).reversed());
             if (nick == null) {
                 return new ArrayList<>();
             }
-            return customerDAO.findByNickContaining(nick);
+            return customers;
         } catch (DataAccessException errorConnecting) {
             System.out.println("Error while trying to connect to the database");
             return new ArrayList<>();
@@ -63,7 +68,9 @@ public class CustomerService {
             if (name == null) {
                 return new ArrayList<>();
             }
-            return customerDAO.findByNameContaining(name);
+            List<Customer> customers = customerDAO.findByNameContaining(name);
+            customers.sort(Comparator.comparing(Customer::getId).reversed());
+            return customers;
         } catch (DataAccessException errorConnecting) {
             System.out.println("Error while trying to connect to the database");
             return new ArrayList<>();
@@ -75,7 +82,9 @@ public class CustomerService {
             if (email == null) {
                 return new ArrayList<>();
             }
-            return customerDAO.findByEmailContaining(email);
+            List<Customer> customers = customerDAO.findByEmailContaining(email);
+            customers.sort(Comparator.comparing(Customer::getId).reversed());
+            return customers;
         } catch (DataAccessException errorConnecting) {
             System.out.println("Error while trying to connect to the database");
             return new ArrayList<>();
