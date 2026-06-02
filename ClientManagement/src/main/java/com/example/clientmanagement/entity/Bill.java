@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idNumber")
+    @Column(name = "idNumber", nullable = true)
     private Long idNumber;
 
     @Column(length = 50, nullable = false)
@@ -34,7 +34,7 @@ public class Bill {
     private double priceUs;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customerId", nullable = true)
     private Customer customer;
 
     public Bill(Long idNumber, String facturaType, double pricePaypal, String title, boolean isMade, LocalDate billDate, double priceEu, double priceUs, Customer customer) {
