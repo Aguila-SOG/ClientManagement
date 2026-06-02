@@ -17,7 +17,7 @@ public class Commission {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", nullable = false)
+    @JoinColumn(name = "customerId", nullable = true)
     private Customer customer;
 
     @ManyToOne
