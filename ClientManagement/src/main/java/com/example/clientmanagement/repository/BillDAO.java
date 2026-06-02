@@ -13,6 +13,8 @@ public interface BillDAO extends JpaRepository<Bill, Long> {
 
     List<Bill> findByCustomerId(Long customerId);
 
+    List<Bill> findByCustomerIsNull();
+
     @Query("SELECT b FROM Bill b WHERE YEAR(b.billDate) = :selectedYear and MONTH(b.billDate) BETWEEN :startMonth AND :endMonth")
     List<Bill> findSpecificMonths(@Param("startMonth") int startMonth,
                                   @Param("endMonth") int endMonth,
