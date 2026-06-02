@@ -46,12 +46,36 @@ public class CustomerService {
         return customerDAO.save(customer);
     }
 
-    public List<Customer> findCustomer(String nick){
+    public List<Customer> findCustomerByNick(String nick){
         try {
             if (nick == null) {
                 return new ArrayList<>();
             }
             return customerDAO.findByNickContaining(nick);
+        } catch (DataAccessException errorConnecting) {
+            System.out.println("Error while trying to connect to the database");
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Customer> findCustomerByName(String name){
+        try {
+            if (name == null) {
+                return new ArrayList<>();
+            }
+            return customerDAO.findByNameContaining(name);
+        } catch (DataAccessException errorConnecting) {
+            System.out.println("Error while trying to connect to the database");
+            return new ArrayList<>();
+        }
+    }
+
+    public List<Customer> findCustomerByEmail(String email){
+        try {
+            if (email == null) {
+                return new ArrayList<>();
+            }
+            return customerDAO.findByEmailContaining(email);
         } catch (DataAccessException errorConnecting) {
             System.out.println("Error while trying to connect to the database");
             return new ArrayList<>();

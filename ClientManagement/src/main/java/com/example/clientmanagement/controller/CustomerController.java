@@ -28,9 +28,19 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @GetMapping("/search/{nick}")
-    public List<Customer> findCustomer(@PathVariable String nick){
-        return customerService.findCustomer(nick);
+    @GetMapping("/search/nick_{nick}")
+    public List<Customer> findCustomerByNick(@PathVariable String nick){
+        return customerService.findCustomerByNick(nick);
+    }
+
+    @GetMapping("/search/name_{name}")
+    public List<Customer> findCustomerByName(@PathVariable String name){
+        return customerService.findCustomerByName(name);
+    }
+
+    @GetMapping("/search/email_{email}")
+    public List<Customer> findCustomerByEmail(@PathVariable String email){
+        return customerService.findCustomerByEmail(email);
     }
 
     @PutMapping("/edit")

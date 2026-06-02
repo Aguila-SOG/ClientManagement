@@ -9,4 +9,8 @@ import java.util.List;
 public interface CustomerDAO extends JpaRepository<Customer, Long> {
 
     List<Customer> findByNickContaining(String nick);
+
+    List<Customer> findByNameContaining(String name);
+
+    List<Customer> findByEmailContaining(String email);
 }
