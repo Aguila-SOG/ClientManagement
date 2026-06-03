@@ -86,6 +86,14 @@ public class Quote {
         this.id.quarterly = quarterly;
     }
 
+    public Integer getMonth() {
+        return id.month;
+    }
+
+    public void setMonth(Integer month) {
+        this.id.month = month;
+    }
+
     public double getFacImport() {
         return facImport;
     }
