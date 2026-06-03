@@ -22,10 +22,10 @@ public class ManagementController {
         return managementService.findAll();
     }
 
-    @GetMapping("/{facYear}/{quarterly}")
-    public Management findById(@PathVariable int facYear, @PathVariable int quarterly) {
+    @GetMapping("/{facYear}/{quarterly}/{month}")
+    public Management findById(@PathVariable int facYear, @PathVariable int quarterly, @PathVariable int month) {
         try {
-            return managementService.findById(facYear, quarterly);
+            return managementService.findById(facYear, quarterly, month);
         } catch (RuntimeException exceptionNotFound) {
             return null;
         }
@@ -41,16 +41,17 @@ public class ManagementController {
         }
     }
 
-    @PutMapping("/edit/{facYear}/{quarterly}")
+    @PutMapping("/edit/{facYear}/{quarterly}/{month}")
     public Management update(
             @PathVariable int facYear,
             @PathVariable int quarterly,
+            @PathVariable int month,
             @RequestBody Management management) {
-        return managementService.editManagement(facYear, quarterly, management);
+        return managementService.editManagement(facYear, quarterly, month, management);
     }
 
-    @DeleteMapping("/delete/{facYear}/{quarterly}")
-    public void delete(@PathVariable int facYear, @PathVariable int quarterly) {
-        managementService.deleteManagement(facYear, quarterly);
+    @DeleteMapping("/delete/{facYear}/{quarterly}/{month}")
+    public void delete(@PathVariable int facYear, @PathVariable int quarterly, @PathVariable int month) {
+        managementService.deleteManagement(facYear, quarterly, month);
     }
 }
