@@ -33,8 +33,8 @@ public class QuoteService {
         return quoteDAO.save(quote);
     }
 
-    public void deleteQuote(int year, int quarterly) {
-        quoteDAO.deleteById(new Quote.Id(year, quarterly));
+    public void deleteQuote(int year, int quarterly, int month) {
+        quoteDAO.deleteById(new Quote.Id(year, quarterly, month));
     }
 
     private final double EURO_TO_USD = 1.16;
@@ -46,6 +46,10 @@ public class QuoteService {
     }
 
     public double calcTotalFactured(int year, int month, String mode) {
+        int quarterly = (month - 1) / 3 + 1;
+        double ammount = quoteDAO.findById(new Quote.Id(year, quarterly, month))
+                .map(Quote::getFacImport)
+                .orElse(0.0);
         List<Quote> yearlyQuotes = quoteDAO.findByIdQuoteYear(year);
         double total = 0.0;
 
