@@ -25,9 +25,6 @@ public class Management {
         @Column(length = 1, nullable = false)
         private Integer quarterly;
 
-        @Column(length = 2, nullable = false)
-        private Integer month;
-
         public Id() {
 
         }
