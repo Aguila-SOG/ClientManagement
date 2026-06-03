@@ -32,7 +32,7 @@ public class BillService {
     public List<Bill> findByCustomerIsNull() {
         List<Bill> bills = billDAO.findByCustomerIsNull();
         bills.sort(Comparator.comparing(Bill::getBillDate));
-        return billDAO.findByCustomerIsNull();
+        return bills;
     }
 
     public Bill findBillById(Long id) {
