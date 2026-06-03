@@ -35,9 +35,9 @@ public class QuoteController {
         return quoteService.editQuote(quote);
     }
 
-    @DeleteMapping("/delete/{year}/{quarterly}")
-    public void deleteQuote(@PathVariable int year, @PathVariable int quarterly) {
-        quoteService.deleteQuote(year, quarterly);
+    @DeleteMapping("/delete/{year}/{quarterly}/{month}")
+    public void deleteQuote(@PathVariable int year, @PathVariable int quarterly, @PathVariable int month) {
+        quoteService.deleteQuote(year, quarterly, month);
     }
 
     @GetMapping("/total/{year}/{month}")

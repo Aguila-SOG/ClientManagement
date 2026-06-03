@@ -32,17 +32,16 @@ public class Management {
 
         }
 
-        public Id(Integer facYear, Integer quarterly, Integer month) {
+        public Id(Integer facYear, Integer quarterly) {
             this.facYear = facYear;
             this.quarterly = quarterly;
-            this.month = month;
         }
     }
 
     public Management() {}
 
-    public Management(Integer facYear, Integer quarterly, Integer month, Double taxPayment, Double performance) {
-        this.id = new Id(facYear, quarterly, month);
+    public Management(Integer facYear, Integer quarterly, Double taxPayment, Double performance) {
+        this.id = new Id(facYear, quarterly);
         this.taxPayment = taxPayment;
         this.performance = performance;
     }
