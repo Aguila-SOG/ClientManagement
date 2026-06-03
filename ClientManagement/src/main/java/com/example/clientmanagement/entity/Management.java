@@ -25,20 +25,24 @@ public class Management {
         @Column(length = 1, nullable = false)
         private Integer quarterly;
 
+        @Column(length = 2, nullable = false)
+        private Integer month;
+
         public Id() {
 
         }
 
-        public Id(Integer facYear, Integer quarterly) {
+        public Id(Integer facYear, Integer quarterly, Integer month) {
             this.facYear = facYear;
             this.quarterly = quarterly;
+            this.month = month;
         }
     }
 
     public Management() {}
 
-    public Management(Integer facYear, Integer quarterly, Double taxPayment, Double performance) {
-        this.id = new Id(facYear, quarterly);
+    public Management(Integer facYear, Integer quarterly, Integer month, Double taxPayment, Double performance) {
+        this.id = new Id(facYear, quarterly, month);
         this.taxPayment = taxPayment;
         this.performance = performance;
     }

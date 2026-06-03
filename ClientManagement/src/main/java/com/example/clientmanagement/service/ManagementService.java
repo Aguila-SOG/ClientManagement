@@ -22,20 +22,20 @@ public class ManagementService {
         managementDAO.save(management);
     }
 
-    public Management findById(int year, int quarterly) {
-        return managementDAO.findById(new Management.Id(year, quarterly))
+    public Management findById(int year, int quarterly, int month) {
+        return managementDAO.findById(new Management.Id(year, quarterly, month))
                 .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
-    public Management editManagement(int year, int quarterly, Management management) {
-        Management existing = findById(year, quarterly);
+    public Management editManagement(int year, int quarterly, int month, Management management) {
+        Management existing = findById(year, quarterly, month);
         existing.setTaxPayment(management.getTaxPayment());
         existing.setPerformance(management.getPerformance());
         return managementDAO.save(existing);
     }
 
-    public void deleteManagement(int year, int quarterly) {
-        findById(year, quarterly);
-        managementDAO.deleteById(new Management.Id(year, quarterly));
+    public void deleteManagement(int year, int quarterly, int month) {
+        findById(year, quarterly, month);
+        managementDAO.deleteById(new Management.Id(year, quarterly, month));
     }
 }
