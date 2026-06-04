@@ -27,7 +27,7 @@ public class ManagementService {
                 .orElseThrow(() -> new RuntimeException("Management record not found"));
     }
 
-    public Management editManagement(int year, int quarterly, int month, Management management) {
+    public Management editManagement(int year, int quarterly, Management management) {
         Management existing = findById(year, quarterly);
         existing.setTaxPayment(management.getTaxPayment());
         existing.setPerformance(management.getPerformance());

@@ -22,7 +22,7 @@ public class ManagementController {
         return managementService.findAll();
     }
 
-    @GetMapping("/{facYear}/{quarterly}/{month}")
+    @GetMapping("/{facYear}/{quarterly}")
     public Management findById(@PathVariable int facYear, @PathVariable int quarterly) {
         try {
             return managementService.findById(facYear, quarterly);
@@ -41,16 +41,15 @@ public class ManagementController {
         }
     }
 
-    @PutMapping("/edit/{facYear}/{quarterly}/{month}")
+    @PutMapping("/edit/{facYear}/{quarterly}")
     public Management update(
             @PathVariable int facYear,
             @PathVariable int quarterly,
-            @PathVariable int month,
             @RequestBody Management management) {
-        return managementService.editManagement(facYear, quarterly, month, management);
+        return managementService.editManagement(facYear, quarterly, management);
     }
 
-    @DeleteMapping("/delete/{facYear}/{quarterly}/{month}")
+    @DeleteMapping("/delete/{facYear}/{quarterly}")
     public void delete(@PathVariable int facYear, @PathVariable int quarterly) {
         managementService.deleteManagement(facYear, quarterly);
     }
