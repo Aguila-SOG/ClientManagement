@@ -1,0 +1,16 @@
+package com.example.clientmanagement.repository;
+
+import com.example.clientmanagement.entity.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface CustomerDAO extends JpaRepository<Customer, Long> {
+
+    List<Customer> findByNickContaining(String nick);
+
+    List<Customer> findByNameContaining(String name);
+
+    List<Customer> findByEmailContaining(String email);
+}

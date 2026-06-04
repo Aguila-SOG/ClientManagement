@@ -1,0 +1,64 @@
+package com.example.clientmanagement.controller;
+
+import com.example.clientmanagement.entity.Commission;
+import com.example.clientmanagement.service.CommissionService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
+@CrossOrigin(origins="*")
+@RestController
+@RequestMapping("/commission")
+public class CommissionController {
+
+    private final CommissionService commissionService;
+
+    public CommissionController(CommissionService commissionService) {
+        this.commissionService = commissionService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Commission>> findAll() {
+        return ResponseEntity.ok(commissionService.findAll());
+    }
+
+    @GetMapping("/customer/{id_customer}")
+    public ResponseEntity<List<Commission>> findAllByClient(@PathVariable("id_customer") long id) {
+        return ResponseEntity.ok(commissionService.findAllByClient(id));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Commission> findCommissionById(@PathVariable Long id) {
+        try {
+            Commission commission = commissionService.findCommissionById(id);
+            return new ResponseEntity<>(commission, HttpStatus.OK);
+        } catch (EntityNotFoundException exceptionIdNotFound) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Commission> create(@RequestBody Commission commission) {
+        try {
+            commissionService.create(commission);
+            return ResponseEntity.created(URI.create("/commission/"+commission.getId())).body(commission);
+        } catch (IllegalArgumentException exceptionIllegalParameter) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<Commission> editCommission(@RequestBody Commission commission) {
+        Commission edited = commissionService.editCommission(commission);
+        return ResponseEntity.ok(edited);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCommission(@PathVariable Long id) {
+        commissionService.deleteCommission(id);
+        return ResponseEntity.noContent().build();
+    }
+}

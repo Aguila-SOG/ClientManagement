@@ -1,0 +1,73 @@
+package com.example.clientmanagement.controller;
+
+import com.example.clientmanagement.entity.Quote;
+import com.example.clientmanagement.service.QuoteService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+@CrossOrigin(origins="*")
+@RestController
+@RequestMapping("/quotes")
+public class QuoteController {
+    private final QuoteService quoteService;
+
+    public QuoteController(QuoteService quoteService) {
+        this.quoteService = quoteService;
+    }
+
+    @GetMapping("/all")
+    public List<Quote> findAll() {
+        return quoteService.findAll();
+    }
+
+    @PostMapping("/create")
+    public Quote create(@RequestBody Quote quote) {
+        return quoteService.create(quote);
+    }
+
+    @GetMapping("/search/{year}")
+    public List<Quote> findQuote(@PathVariable int year) {
+        return quoteService.findQuote(year);
+    }
+
+    @PutMapping("/edit")
+    public Quote editQuote(@RequestBody Quote quote) {
+        return quoteService.editQuote(quote);
+    }
+
+    @DeleteMapping("/delete/{year}/{quarterly}/{month}")
+    public void deleteQuote(@PathVariable int year, @PathVariable int quarterly, @PathVariable int month) {
+        quoteService.deleteQuote(year, quarterly, month);
+    }
+
+    @GetMapping("/total/{year}/{month}")
+    public double calcTotalFactured(
+            @PathVariable int year,
+            @PathVariable int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcTotalFactured(year, month, mode);
+    }
+
+    @GetMapping("/irpf/{year}/{month}")
+    public double calcIrpfRetained(
+            @PathVariable int year,
+            @PathVariable int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcIrpfRetained(year, month, mode);
+    }
+
+    @GetMapping("/earnings/{year}/{month}")
+    public double calcRealEarnings(
+            @PathVariable int year,
+            @PathVariable int month,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.calcRealEarnings(year, month, mode);
+    }
+
+    @GetMapping("/yearly/{year}")
+    public double totalYearlyAmmount(
+            @PathVariable int year,
+            @RequestParam(defaultValue = "EUR") String mode) {
+        return quoteService.totalYearlyAmmount(year, mode);
+    }
+}
